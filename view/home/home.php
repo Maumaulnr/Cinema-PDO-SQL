@@ -5,7 +5,7 @@ ob_start(); //def : Enclenche la temporisation de sortie
 ?>
 
 <div class="">
-
+    
 <div>
 
 <?php
