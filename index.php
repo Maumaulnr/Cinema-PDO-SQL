@@ -29,7 +29,7 @@ if (isset($_GET['action'])) {
             $ctrFilm->listMovies();
             break;
         case "detailsMovie":
-            // $movieId = $_GET['movie_id'];
+            $id = intval($_GET['id']);
             $ctrFilm->detailsMovie($id);
             break;
        

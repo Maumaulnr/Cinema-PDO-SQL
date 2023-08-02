@@ -27,31 +27,21 @@ class FilmController
     {
         $dao = new DAO();
 
-        $sql2 = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster
-                FROM movie m
-                WHERE m.id_movie = :id';
+        $sql2 = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster, d.firstname AS firstnameDirector, d.lastname AS lastnameDirector, a.firstname AS firstnameActor, a.lastname AS lastnameActor, r.name_role
+        FROM movie m
+        LEFT JOIN director dir ON m.director_id = dir.id_director
+        LEFT JOIN person d ON dir.person_id = d.id_person
+        LEFT JOIN casting c ON m.id_movie = c.movie_id
+        LEFT JOIN actor act ON c.actor_id = act.id_actor
+        LEFT JOIN person a ON act.person_id = a.id_person
+        LEFT JOIN role r ON c.role_id = r.id_role
+        WHERE m.id_movie = movie_id';
 
-        // Return all the director
-        $sql3 = 'SELECT m.title, p.lastname AS lastnameDirector, p.firstname AS firstnameDirector
-                FROM movie m
-                INNER JOIN director d ON m.director_id = d.id_director
-                INNER JOIN person p ON d.person_id = p.id_person
-                WHERE m.id_movie = :id';
+        $params = ['movie_id' => $id];
         
-        // Return the casting
-        $sql4 = 'SELECT m.title, r.name_role, p.firstname AS firstnameActor, p.lastname AS lastnameActor
-                FROM casting c
-                INNER JOIN movie m ON c.movie_id = m.id_movie
-                INNER JOIN role r ON c.role_id = r.id_role
-                INNER JOIN actor a ON c.actor_id = a.id_actor
-                INNER JOIN person p ON a.person_id = p.id_person
-                WHERE m.id_movie = :id';
-
-        $param = ['movie_id' => $id];
+        $detailsMovie = $dao->executeRequest($sql2, $params);
         
-        $detailsMovie = $dao -> executeRequest($sql2, [':id' => $id]);
-        $movieDirector = $dao -> executeRequest($sql3, [':id' => $id]);
-        $castingMovie = $dao -> executeRequest($sql4, [':id' => $id]);
+        $movie = $detailsMovie->fetch();
 
         require 'view/movie/detailsMovie.php';
     }

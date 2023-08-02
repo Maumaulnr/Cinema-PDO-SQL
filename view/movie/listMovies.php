@@ -10,7 +10,7 @@ ob_start(); //def : Enclenche la temporisation de sortie
 
         <div class="uk-grid-match uk-flex-center" uk-grid>
             <?php
-            while ($movie = $movies->fetch()) { var_dump($movies)?>
+            while ($movie = $movies->fetch()) { ?>
             
                 <div class="uk-width-auto uk-height-match" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
                     <div class="uk-card uk-card-small uk-card-default uk-height-match uk-border-rounded">

@@ -4,7 +4,7 @@
 ob_start(); //def : Enclenche la temporisation de sortie
 
 $movie = $detailsMovie->fetch();
-var_dump($detailsMovie);
+// var_dump($detailsMovie);
 
 ?>
 
@@ -19,26 +19,18 @@ var_dump($detailsMovie);
                         <p><strong>Release Year:</strong> <?= $movie['release_film']; ?></p>
                         <p><strong>Duration:</strong> <?= $movie['duration']; ?> minutes</p>
                         <p><strong>Synopsis:</strong> <?= $movie['synopsys']; ?></p>
-                        <p><strong>Director:</strong> <?= $director['firstname']; ?></p>
+                        <!-- <p><strong>Director:</strong> <?= $director['firstname']; ?></p> -->
                         <p><strong>Rating:</strong> <?= $movie['grade']; ?></p>
 
-                        <h3>List of Directors</h3>
-                        <?php while ($director = $directors->fetch()) {
-                        ?>
-                            <!-- Director informations-->
-                            <p><strong>Director:</strong> <?= $director['title']; ?></p>
-                            <p><strong>Director:</strong> <?= $director['firstnameDirector']; ?></p>
-                            <p><strong>Director:</strong> <?= $director['lastnameDirector']; ?></p>
-                        <?php } ?>
+                        <h3>Director</h3>
+                        <!-- Director informations-->
+                        <p><strong>Director:</strong> <?= $movie['firstnameDirector']. ' '. $movie['lastnameDirector']; var_dump($movie)  ?></p>
                         
                         <h3>Casting</h3>
-                        <?php while ($actor = $actors->fetch()) { 
+                        <?php while ($actor = $detailsMovie->fetch()) { 
                         ?>
-                            <!-- Casting informations -->
-                            <p><strong>Actor:</strong> <?= $actor['title']; ?></p>
-                            <p><strong>Actor:</strong> <?= $actor['name_role']; ?></p>
-                            <p><strong>Actor:</strong> <?= $actor['firstnameActor']; ?></p>
-                            <p><strong>Actor:</strong> <?= $actor['lastnameActor']; ?></p>
+                        <!-- Casting informations -->
+                        <p><strong>Actor:</strong> <?= $actor['name_role']. ': '. $actor['firstnameActor']. ' '. $actor['lastnameActor']; ?></p>
                         <?php } ?>
                     </div>
                 </div>
