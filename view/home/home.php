@@ -14,3 +14,5 @@ $content = ob_get_clean(); //def : Exécute successivement ob_get_content() et o
 
 require "view/template.php"; // copie colle le contenu. 
 ?>
+
+<!-- https://github.com/Lotus-Narges/10_CINEMA_PDO/blob/main/view/filmDetails.php -->
