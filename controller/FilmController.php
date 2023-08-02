@@ -23,18 +23,35 @@ class FilmController
     }
 
     // function qui permet de récupérer les infos d'un film (année de sortie, le casting, réalisateur, durée, synopsis, note)
-    public function detailsMovies($movieId)
+    public function detailsMovie($id)
     {
         $dao = new DAO();
 
-        $sql2 = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster, p.lastname AS nameDirector, p.firstname AS firstnameDirector, p.lastname AS nameActor, p.firstname AS firstnameActor
+        $sql2 = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster
+                FROM movie m
+                WHERE m.id_movie = :id';
+
+        // Return all the director
+        $sql3 = 'SELECT m.title, p.lastname AS lastnameDirector, p.firstname AS firstnameDirector
                 FROM movie m
                 INNER JOIN director d ON m.director_id = d.id_director
-                WHERE m.id_movie = movie_id';
+                INNER JOIN person p ON d.person_id = p.id_person
+                WHERE m.id_movie = :id';
+        
+        // Return the casting
+        $sql4 = 'SELECT m.title, r.name_role, p.firstname AS firstnameActor, p.lastname AS lastnameActor
+                FROM casting c
+                INNER JOIN movie m ON c.movie_id = m.id_movie
+                INNER JOIN role r ON c.role_id = r.id_role
+                INNER JOIN actor a ON c.actor_id = a.id_actor
+                INNER JOIN person p ON a.person_id = p.id_person
+                WHERE m.id_movie = :id';
 
-        $param = ['movie_id' => $movieId];
-
-        $movie = $dao->executeRequest($sql2, $param)->fetch();
+        $param = ['movie_id' => $id];
+        
+        $detailsMovie = $dao -> executeRequest($sql2, [':id' => $id]);
+        $movieDirector = $dao -> executeRequest($sql3, [':id' => $id]);
+        $castingMovie = $dao -> executeRequest($sql4, [':id' => $id]);
 
         require 'view/movie/detailsMovie.php';
     }

@@ -17,16 +17,20 @@ spl_autoload_register(function ($class_name) {
 $ctrFilm = new FilmController();
 $ctrHome = new HomeController();
 
-if (isset($_GET['action'])) {
+// protection of injection in URL
+$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+// Verify if there's an action & what to do next
+if (isset($_GET['action'])) {
+    // Choosing the next step based on each specific action
     switch ($_GET['action']) {
             //insert here all the request to generate new page
         case "listMovies":
             $ctrFilm->listMovies();
             break;
         case "detailsMovie":
-            $movieId = $_GET['movieId'];
-            $ctrFilm->detailsMovie($movieId);
+            // $movieId = $_GET['movie_id'];
+            $ctrFilm->detailsMovie($id);
             break;
        
     }
