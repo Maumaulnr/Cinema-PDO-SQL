@@ -19,7 +19,8 @@ $ctrFilm = new FilmController();
 $ctrHome = new HomeController();
 
 // protection of injection in URL
-$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+// $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 
 // Verify if there's an action & what to do next
 if (isset($_GET['action'])) {

@@ -1,8 +1,8 @@
 <?php
 require_once 'app/DAO.php';
 
-$dao = new DAO();
-$genres = $dao->executeRequest("SELECT * FROM Genre");
+// $dao = new DAO();
+// $genres = $dao->executeRequest("SELECT * FROM Genre");
 
 ob_start(); // Enclenche la temporisation de sortie
 ?>

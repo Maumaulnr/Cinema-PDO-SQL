@@ -27,19 +27,53 @@ class FilmController
     {
         $dao = new DAO();
 
-        $sql2 = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster, d.firstname AS firstnameDirector, d.lastname AS lastnameDirector, a.firstname AS firstnameActor, a.lastname AS lastnameActor, r.name_role
+        // $sqlMovieDirector = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster, d.firstname AS firstnameDirector, d.lastname AS lastnameDirector, a.firstname AS firstnameActor, a.lastname AS lastnameActor, r.name_role
+        $sqlMovieDirector = 'SELECT m.title, m.release_film, m.duration, m.synopsys, m.grade, m.poster, d.firstname AS firstnameDirector, d.lastname AS lastnameDirector
         FROM movie m
-        LEFT JOIN director dir ON m.director_id = dir.id_director
-        LEFT JOIN person d ON dir.person_id = d.id_person
-        LEFT JOIN casting c ON m.id_movie = c.movie_id
-        LEFT JOIN actor act ON c.actor_id = act.id_actor
-        LEFT JOIN person a ON act.person_id = a.id_person
-        LEFT JOIN role r ON c.role_id = r.id_role
+        INNER JOIN director dir ON m.director_id = dir.id_director
+        INNER JOIN person d ON dir.person_id = d.id_person
+        -- INNER JOIN casting c ON m.id_movie = c.movie_id
+        -- INNER JOIN actor act ON c.actor_id = act.id_actor
+        -- INNER JOIN person a ON act.person_id = a.id_person
+        -- INNER JOIN role r ON c.role_id = r.id_role
         WHERE m.id_movie = :movie_id';
 
-        $params = [':movie_id' => $id];
+        $paramsMovie = [':movie_id' => $id];
         
-        $detailsMovie = $dao->executeRequest($sql2, $params);
+        $detailsMovie = $dao->executeRequest($sqlMovieDirector, $paramsMovie);
+
+        // // APPROCHE : LISTE DES ACTEURS ET LISTE DES ROLES (SEPAREES) //
+
+        // // actors
+        // $sqlActors = 'SELECT *
+        //     FROM casting c
+        //         INNER JOIN actor act ON c.actor_id = act.id_actor
+        //     WHERE c.movie_id = :movie_id
+        // ';
+        
+        // $detailsActors = $dao->executeRequest($sqlActors, $paramsMovie);
+
+        // // roles
+        // $sqlRoles = 'SELECT *
+        //     FROM casting c
+        //         INNER JOIN role r ON c.role_id = r.id_role
+        //     WHERE c.movie_id = :movie_id
+        // ';
+        
+        // $detailsRoles = $dao->executeRequest($sqlRoles, $paramsMovie);
+
+        // APPROCHE : PAR CASTING (acteur et rôle liés) //
+
+        // castings
+        $sqlCastings = 'SELECT a.firstname AS firstnameActor, a.lastname AS lastnameActor, r.name_role
+            FROM casting c
+                INNER JOIN actor act ON c.actor_id = act.id_actor
+                INNER JOIN person a ON act.person_id = a.id_person
+                INNER JOIN role r ON c.role_id = r.id_role
+            WHERE c.movie_id = :movie_id
+        ';
+        
+        $detailsCastings = $dao->executeRequest($sqlCastings, $paramsMovie);
         
         // $movie = $detailsMovie->fetch();
 
@@ -61,8 +95,10 @@ class FilmController
             INNER JOIN gender g ON mgl.gender_id = g.id_gender
             WHERE mgl.gender_id = :gender_id;";
 
-            $params = [':genre_id' => $genreId];
+            $params = [':genre_id' => $id];
             $movies = $dao->executeRequest($sql, $params);
+
+            // $genres = $dao->executeRequest("SELECT * FROM Genre");
 
             require 'view/gender/detailsGender.php';
         }

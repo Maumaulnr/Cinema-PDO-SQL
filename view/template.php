@@ -30,17 +30,17 @@
 
                     <div class="navbar">
 
-                        <ul class="">
-                            <li>
+                        <ul class="category">
+                            <li class="list-category">
                                 <a href="index.php">Home</a>
                             </li>
-                            <li>
+                            <li class="list-category">
                                 <a href="index.php?action=listMovies">Movies</a>
                             </li>
-                            <li>
+                            <li class="list-category">
                                 <a href="index.php?action=genreDetails&id">Gender</a>
                             </li>
-                            <li>
+                            <li class="list-category">
                                 <a href="index.php?action=detailsActor&id">Actor</a>
                             </li>
                         </ul>
