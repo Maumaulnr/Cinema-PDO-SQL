@@ -1,4 +1,5 @@
 <!-- Appelle les contrôleurs -->
+<p>index page</p>
 
 <?php
 
@@ -29,8 +30,14 @@ if (isset($_GET['action'])) {
             $ctrFilm->listMovies();
             break;
         case "detailsMovie":
-            $id = intval($_GET['id']);
+            // $id = intval($_GET['id']);
             $ctrFilm->detailsMovie($id);
+            break;
+        case "detailsGender":
+            $ctrFilm->detailsGender();
+            break;
+        case "listActors":
+            $ctrFilm->listActors();
             break;
        
     }

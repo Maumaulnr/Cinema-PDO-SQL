@@ -35,15 +35,52 @@ class FilmController
         LEFT JOIN actor act ON c.actor_id = act.id_actor
         LEFT JOIN person a ON act.person_id = a.id_person
         LEFT JOIN role r ON c.role_id = r.id_role
-        WHERE m.id_movie = movie_id';
+        WHERE m.id_movie = :movie_id';
 
-        $params = ['movie_id' => $id];
+        $params = [':movie_id' => $id];
         
         $detailsMovie = $dao->executeRequest($sql2, $params);
         
-        $movie = $detailsMovie->fetch();
+        // $movie = $detailsMovie->fetch();
 
         require 'view/movie/detailsMovie.php';
+    }
+
+    // Affiche les films associés à un genre spécifique
+    public function genreDetails()
+    {
+        $dao = new DAO();
+
+        if (isset($_GET['id'])) {
+            $genreId = $_GET['id'];
+
+            // Récupérer les films associés à ce genre
+            $sql = "SELECT m.id_movie, m.title, m.poster, g.label
+            FROM movie m
+            INNER JOIN movie_genre_link mgl ON m.id_movie = mgl.movie_id
+            INNER JOIN gender g ON mgl.gender_id = g.id_gender
+            WHERE mgl.gender_id = :gender_id;";
+
+            $params = [':genre_id' => $genreId];
+            $movies = $dao->executeRequest($sql, $params);
+
+            require 'view/gender/detailsGender.php';
+        }
+    }
+
+    // Affiche la liste de tous les acteurs/actrices
+    public function listActors()
+    {
+        $dao = new DAO();
+
+        $sql = "SELECT a.id_actor, p.firstname, p.lastname
+                FROM actor a
+                INNER JOIN person p ON a.person_id = p.id_person
+                ORDER BY p.lastname, p.firstname";
+
+        $actors = $dao->executeRequest($sql);
+
+        require 'view/actor/listActors.php';
     }
    
 }

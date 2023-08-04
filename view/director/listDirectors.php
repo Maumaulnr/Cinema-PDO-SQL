@@ -11,10 +11,10 @@ while ($director = $directors->fetch()) {
 
 ?>
 
-<p><?= $director['firstname'] ?></p>
-<p><?= $director['lastname'] ?></p>
-<p><?= $director['brith_date'] ?></p>
-<p><?= $director['gender'] ?></p>
+    <p><?= $director['firstname'] ?></p>
+    <p><?= $director['lastname'] ?></p>
+    <p><?= $director['birth_date'] ?></p>
+    <p><?= $director['gender'] ?></p>
 
 
 <?php } ?>

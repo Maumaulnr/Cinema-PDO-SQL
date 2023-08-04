@@ -1,11 +1,11 @@
-<!-- page d'accueil -->
+<!-- Page d'accueil -->
 
 <?php
 ob_start(); //def : Enclenche la temporisation de sortie
 ?>
 
 <div class="">
-    
+    <p>home.php</p>
 <div>
 
 <?php

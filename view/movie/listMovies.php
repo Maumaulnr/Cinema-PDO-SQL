@@ -2,7 +2,7 @@
 
 ob_start(); //def : Enclenche la temporisation de sortie
 ?>
-
+<p>listMovies</p>
 
 <div class="uk-section uk-section-secondary">
     <div class="uk-container">

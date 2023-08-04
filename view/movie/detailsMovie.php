@@ -16,15 +16,16 @@ $movie = $detailsMovie->fetch();
 
                 <div class="uk-width-auto uk-height-match" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
                     <div class="uk-card uk-card-small uk-card-default uk-height-match uk-border-rounded">
+                        <figure class="poster uk-height-match uk-border-rounded">
+                            <img class="uk-border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">
+                        </figure>
                         <p><strong>Release Year:</strong> <?= $movie['release_film']; ?></p>
                         <p><strong>Duration:</strong> <?= $movie['duration']; ?> minutes</p>
                         <p><strong>Synopsis:</strong> <?= $movie['synopsys']; ?></p>
-                        <!-- <p><strong>Director:</strong> <?= $director['firstname']; ?></p> -->
-                        <p><strong>Rating:</strong> <?= $movie['grade']; ?></p>
+                        <p><strong>Rating:</strong> <?= $movie['grade']; ?> /5</p>
 
-                        <h3>Director</h3>
                         <!-- Director informations-->
-                        <p><strong>Director:</strong> <?= $movie['firstnameDirector']. ' '. $movie['lastnameDirector']; var_dump($movie)  ?></p>
+                        <p><strong>Director:</strong> <?= $movie['firstnameDirector']. ' '. $movie['lastnameDirector']; ?></p>
                         
                         <h3>Casting</h3>
                         <?php while ($actor = $detailsMovie->fetch()) { 
