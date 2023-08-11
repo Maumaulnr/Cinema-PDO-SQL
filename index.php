@@ -34,8 +34,8 @@ if (isset($_GET['action'])) {
             // $id = intval($_GET['id']);
             $ctrFilm->detailsMovie($id);
             break;
-        case "detailsGender":
-            $ctrFilm->detailsGender();
+        case "detailsGenre":
+            $ctrFilm->detailsGenre();
             break;
         case "listActors":
             $ctrFilm->listActors();

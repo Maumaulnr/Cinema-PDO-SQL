@@ -92,15 +92,15 @@ class FilmController
             $sql = "SELECT m.id_movie, m.title, m.poster, g.label
             FROM movie m
             INNER JOIN movie_genre_link mgl ON m.id_movie = mgl.movie_id
-            INNER JOIN gender g ON mgl.gender_id = g.id_gender
-            WHERE mgl.gender_id = :gender_id;";
+            INNER JOIN genre g ON mgl.genre_id = g.id_genre
+            WHERE mgl.genre_id = :genre_id;";
 
             $params = [':genre_id' => $id];
             $movies = $dao->executeRequest($sql, $params);
 
             // $genres = $dao->executeRequest("SELECT * FROM Genre");
 
-            require 'view/gender/detailsGender.php';
+            require 'view/genre/detailsGenre.php';
         }
     }
 

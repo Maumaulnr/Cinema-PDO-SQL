@@ -8,16 +8,16 @@ $movie = $detailsMovie->fetch();
 
 ?>
 
-<div class="uk-section uk-section-secondary">
-    <div class="uk-container">
-        <h1>Details of movie <span class="uk-badge"><?= $movie['title']; ?></span></h1>
+<div class="">
+    <div class="">
+        <h1>Details of movie <span class=""><?= $movie['title']; ?></span></h1>
 
-        <div class="uk-grid-match uk-flex-center" uk-grid>
+        <div class="flex-center" uk-grid>
 
-                <div class="uk-width-auto uk-height-match" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
-                    <div class="uk-card uk-card-small uk-card-default uk-height-match uk-border-rounded">
-                        <figure class="poster uk-height-match uk-border-rounded">
-                            <img class="uk-border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">
+                <div class="" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
+                    <div class="card card-small card-default height-match border-rounded">
+                        <figure class="poster height-match border-rounded">
+                            <img class="border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">
                         </figure>
                         <p><strong>Release Year:</strong> <?= $movie['release_film']; ?></p>
                         <p><strong>Duration:</strong> <?= $movie['duration']; ?> minutes</p>

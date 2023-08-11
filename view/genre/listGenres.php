@@ -7,11 +7,11 @@ require_once 'app/DAO.php';
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 <p>listGenders</p>
-<div class="uk-section uk-section-secondary">
-    <div class="uk-container">
+<div class="">
+    <div class="">
         <h1>List of Genres</h1>
 
-        <ul class="uk-list uk-list-divider">
+        <ul class="">
             <?php while ($genre = $genres->fetch()) { ?>
                 <li><a href="index.php?action=genreDetails&id=<?= $genre['id_genre']; ?>"><?= $genre['label']; ?></a></li>
             <?php } ?>
