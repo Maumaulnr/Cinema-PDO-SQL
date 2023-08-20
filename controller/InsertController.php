@@ -6,7 +6,7 @@ require_once 'app/DAO.php';
 
 class InsertController
 {
-    public function InsertMovie() {
+    public function insertMovie() {
         $dao = new DAO();
 
         if(isset($_POST['submit'])) {
@@ -29,8 +29,8 @@ class InsertController
             ':release_film'=>$movieReleaseFilm, 
             ':duration'=>$movieDuration, 
             ':synopsys'=>$movieSynopsys, 
-            ':grade'$movieGrade, 
-            ':poster'$movieGrade, 
+            ':grade'=>$movieGrade, 
+            ':poster'=>$moviePoster, 
             ':id-director'=>$movieDirector]);
 
         }
@@ -39,6 +39,74 @@ class InsertController
         $this->insertMovieForm();
     }
 
+    // Insert Role
+    public function insertRole() {
+        $dao = new DAO();
+
+        if(isset($_POST['submit'])) {
+            $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPACIAL_CHARS);
+
+            if(!empty($role)) {
+                $sqlInsertRole = 'INSERT INTO Role (role) VALUES (:role)';
+                $insertRole = dao->executeRequest($sqlInsertRole, [':role' => $role]);
+
+                if($insertRole) {
+                    echo "Add Role";
+                } else {
+                    echo "Error";
+                }
+            }
+        }
+        // Reload the page after submit
+        $this->insertRoleForm();
+    }
+
+    public function insertCastingForm() {
+        $dao = new DAO();
+
+        // Select Role
+        $sqlInsertRole = "SELECT id_role, name_role FROM role";
+        $roles = $dao->executeRequest($sqlInsertRole);
+
+        // Select an actor
+        $sqlInsertActor = "SELECT a.id_actor, p.firstname, p.lastname 
+                            FROM actor 
+                            INNER JOIN person p 
+                            ON a.id_actor = p.id_person; ";
+        $actor = $dao->executeRequest($sqlInsertActor);
+
+        // Select a movie
+        $sqlInsertMovie = "SELECT m.id_movie, m.title FROM movie";
+        $movies = $dao->executeRequest($sqlInsertMovie);
+
+        require "view/insert/insertCasting.php";
+    }
+
+    public function insertCasting() {
+        $dao = new DAO();
+
+        if(isset($_POST['submit'])) {
+            // Stock the actor, movie and role
+            $roleCasting = $_POST['roleCasting'];
+            $actorCasting = $_POST['actorCasting'];
+            $movieCasting = $_POST['movieCasting'];
+
+            if(!empty($roleCasting) && !empty($actorCasting) && !empty($movieCasting)) {
+                $sqlInsertCasting = 'INSERT INTO casting (movie_id, actor_id, role_id) VALUES (:movie_id, :actor_id, :role_id)';
+                $insertCasting = $dao->executeRequest($sqlInsertCasting, [':movie_id' => $movieCasting,
+                                                                            ':actor_id' => $actorCasting,
+                                                                            ':role_id' => $roleCasting]);
+                
+                if($insertCasting) {
+                    echo "Add Casting";
+                } else {
+                    echo "Error";
+                }
+            }
+        }
+        // Reload the page after the submit
+        $this->insertCastingForm();
+    }
 
 }
 

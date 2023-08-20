@@ -7,6 +7,10 @@ require_once "controller/FilmController.php";
 
 require_once "controller/HomeController.php";
 
+require_once "controller/InsertController.php";
+
+require_once "controller/DeleteController.php";
+
 
 // Appel de la function autoload pour charger automatiquement tout les controllers crées
 spl_autoload_register(function ($class_name) {
@@ -17,6 +21,8 @@ spl_autoload_register(function ($class_name) {
 
 $ctrFilm = new FilmController();
 $ctrHome = new HomeController();
+$ctrInsert = new InsertController();
+$ctrDelete = new DeleteController();
 
 // protection of injection in URL
 // $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -39,6 +45,9 @@ if (isset($_GET['action'])) {
             break;
         case "listActors":
             $ctrFilm->listActors();
+            break;
+        case "insertMovie":
+            $ctrlInsert->insertMovie();
             break;
        
     }

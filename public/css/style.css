@@ -4,12 +4,12 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   background-image: url(http://www.hdwallpaper.nu/wp-content/uploads/2016/02/california_wallpaper_20.jpg);
   object-fit: cover;
   background-color: rgb(175, 131, 0);
   font-family: "Segoe UI", "Roboto", Tahoma;
-}
+} */
 
 header {
   width: 800px;
@@ -44,24 +44,31 @@ nav {
   flex-direction: column;
 }
 
-/* li */
-.list-category {
-  margin: 0 8px; */
-  /* list-style: none;
-  float: left;
-  margin-right: 15px; */
-  /* opacity: 0; */
-  /* transform: translateX(-150px);
-  transition: all .2s ease-in; */
-  /* color: #999;
-  font-weight:400;
-  cursor: pointer;
+
+/* List of Movies */
+.list-movies {
+  padding-bottom: 15px;
 }
 
+.badge {
+  background-color: white;
+  padding: 5px 18px;
+  border-radius: 50%;
+}
 
-.poster {
+.container-movies {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.title-movie {
   display: flex;
   justify-content: center;
 }
+
+
+/*  */
 
   

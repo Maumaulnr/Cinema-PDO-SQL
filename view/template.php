@@ -43,6 +43,10 @@
                             <li class="list-category">
                                 <a href="index.php?action=detailsActor&id">Actor</a>
                             </li>
+                            <li class="list-category">
+                                <a href="index.php?action=insertMovieForm">Insert Movie</a>
+                            </li>
+
                         </ul>
 
                     </div>
@@ -55,5 +59,4 @@
         <small>2023 &copy; Cinema - Cinema by </small>
     </footer>
 </body>
-
 </html>
