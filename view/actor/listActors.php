@@ -5,11 +5,11 @@ ob_start(); // Enclenche la temporisation de sortie
 <p>Page listActors</p>
 
 <!-- list of the actors -->
-<div class="uk-section uk-section-secondary">
-    <div class="uk-container">
+<div class="section section-secondary">
+    <div class="container">
         <h1>List Actors</h1>
 
-        <ul class="uk-list uk-list-divider">
+        <ul class="list-divider">
             <?php while ($actor = $actors->fetch()) { ?>
                 <p><?= $actor['id_actor']; ?></p>
                 <p><?= $actor['lastname']; ?></p>

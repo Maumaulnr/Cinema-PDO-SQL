@@ -14,7 +14,7 @@ $movie = $detailsMovie->fetch();
 
         <div class="flex-center" uk-grid>
 
-                <div class="" uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
+                <div class="" scrollspy="target: > div; cls: animation-fade; delay: 500">
                     <div class="card card-small card-default height-match border-rounded">
                         <figure class="poster height-match border-rounded">
                             <img class="border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">

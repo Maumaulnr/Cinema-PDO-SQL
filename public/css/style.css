@@ -4,20 +4,20 @@
   box-sizing: border-box;
 }
 
-/* body {
-  background-image: url(http://www.hdwallpaper.nu/wp-content/uploads/2016/02/california_wallpaper_20.jpg);
-  object-fit: cover;
+body {
+  /* background-image: url(http://www.hdwallpaper.nu/wp-content/uploads/2016/02/california_wallpaper_20.jpg);
+  object-fit: cover; */
   background-color: rgb(175, 131, 0);
   font-family: "Segoe UI", "Roboto", Tahoma;
-} */
+}
 
-header {
+/* header {
   width: 800px;
   height: 600px;
   margin: 10px auto;
   box-shadow: 0px 2px 5px rgba(0,0,0,.4);
   box-shadow: 8px 10px 66px 1px rgba(0, 0, 0, 0.4);
-}
+} */
 
 nav {
   position: relative;

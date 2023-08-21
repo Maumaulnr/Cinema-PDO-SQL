@@ -21,7 +21,9 @@ spl_autoload_register(function ($class_name) {
 
 $ctrFilm = new FilmController();
 $ctrHome = new HomeController();
-$ctrInsert = new InsertController();
+$ctrGenre = new GenreController();
+$ctrPerson = new PersonController();
+$ctrRole = new RoleController();
 $ctrDelete = new DeleteController();
 
 // protection of injection in URL
@@ -36,19 +38,52 @@ if (isset($_GET['action'])) {
         case "listMovies":
             $ctrFilm->listMovies();
             break;
-        case "detailsMovie":
-            // $id = intval($_GET['id']);
-            $ctrFilm->detailsMovie($id);
-            break;
-        case "detailsGenre":
-            $ctrFilm->detailsGenre();
-            break;
+        // default:
+        //     $ctrHome->HomePage();
+        
+
+        // LIST
+        case "listGenres":
+            $ctrFilm->listGenres();
+        
         case "listActors":
             $ctrFilm->listActors();
             break;
-        case "insertMovie":
-            $ctrlInsert->insertMovie();
+
+        case "listGenres":
+            $ctrGenre->listGenres();
             break;
+
+        case "listRoles":
+            $ctrRoles->listRoles();
+            break;
+
+        case "listDirectors":
+            $ctrPerson->listDirectors();
+        
+        // DETAIL
+        case "detailsMovie":
+            $ctrFilm->detailsMovie($id);
+            break;
+
+        case "detailsGenre":
+            $ctrFilm->detailsGenre($id);
+            break;
+        
+        
+        // ADD
+        case "insertMovieForm":
+            $ctrInsert->insertMovieForm();
+            break;
+        case "insertMovie":
+            $ctrInsert->insertMovie();
+            break;
+        // default:
+        //     $ctrHome->HomePage();
+
+        // UPDATE
+
+        // DEFAULT
        
     }
 } else {

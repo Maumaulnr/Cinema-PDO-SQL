@@ -64,7 +64,7 @@ class FilmController
 
         // APPROCHE : PAR CASTING (acteur et rôle liés) //
 
-        // castings
+        // Castings
         $sqlCastings = 'SELECT a.firstname AS firstnameActor, a.lastname AS lastnameActor, r.name_role
             FROM casting c
                 INNER JOIN actor act ON c.actor_id = act.id_actor
@@ -80,43 +80,79 @@ class FilmController
         require 'view/movie/detailsMovie.php';
     }
 
-    // Affiche les films associés à un genre spécifique
-    public function genreDetails()
-    {
-        $dao = new DAO();
-
-        if (isset($_GET['id'])) {
-            $genreId = $_GET['id'];
-
-            // Récupérer les films associés à ce genre
-            $sql = "SELECT m.id_movie, m.title, m.poster, g.label
-            FROM movie m
-            INNER JOIN movie_genre_link mgl ON m.id_movie = mgl.movie_id
-            INNER JOIN genre g ON mgl.genre_id = g.id_genre
-            WHERE mgl.genre_id = :genre_id;";
-
-            $params = [':genre_id' => $id];
-            $movies = $dao->executeRequest($sql, $params);
-
-            // $genres = $dao->executeRequest("SELECT * FROM Genre");
-
-            require 'view/genre/detailsGenre.php';
-        }
-    }
+    
 
     // Affiche la liste de tous les acteurs/actrices
     public function listActors()
     {
         $dao = new DAO();
 
-        $sql = "SELECT a.id_actor, p.firstname, p.lastname
+        $sqlListActor = "SELECT a.id_actor, p.firstname, p.lastname
                 FROM actor a
                 INNER JOIN person p ON a.person_id = p.id_person
                 ORDER BY p.lastname, p.firstname";
 
-        $actors = $dao->executeRequest($sql);
+        $actors = $dao->executeRequest($sqlListActor);
 
         require 'view/actor/listActors.php';
+    }
+
+
+    // FORMULAIRE POUR INSERER UN FILM
+    public function insertMovieForm() {
+        $dao = new DAO();
+
+        // Select Genres
+        $sqlGenres = "SELECT id_genre, label FROM genre ORDER BY label ASC;";
+        $genres = $dao->executeRequest($sqlGenres);
+
+        require "view/insert/insertMovieForm.php";
+    }
+
+    public function insertMovie() {
+        $dao = new DAO();
+
+        // if(isset($_POST['submit'])) {
+            $movieTitle = filter_input(INPUT_POST, "movieTitle", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $movieReleaseFilm = filter_input(INPUT_POST, "movieReleaseFilm", FILTER_SANITIZE_NUMBER_INT);
+            $movieDuration = filter_input(INPUT_POST, "movieDuration", FILTER_SANITIZE_NUMBER_INT);
+            $movieSynopsys = filter_input(INPUT_POST, "movieSynopsys", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $movieGrade = filter_input(INPUT_POST, "movieGrade", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $moviePoster = filter_input(INPUT_POST, "moviePoster", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            $movieDirector = filter_input(INPUT_POST, "movieDirector", FILTER_SANITIZE_NUMBER_INT);
+
+            $movieActor = filter_input(INPUT_POST, "movieActor", FILTER_SANITIZE_NUMBER_INT);
+            $movieRole = filter_input(INPUT_POST, "movieRole", FILTER_SANITIZE_NUMBER_INT);
+
+            $movieGenres = filter_input(INPUT_POST, "movieGenre", FILTER_SANITIZE_NUMBER_INT)
+        // }
+
+        if(!empty($movieTitle) && !empty($movieReleaseFilm) && !empty($movieDuration) && !empty($movieSynopsys) && !empty($movieGrade) && !empty($moviePoster) && !empty($movieDirector)) {
+            // Insert movie details
+            $sqlAddMovie = 'INSERT INTO movie (title, release_film, duration, synopsys, grade, poster, director_id)
+            VALUES (:title, :release_film, :duration, :synopsys, :grade, :poster, :director_id)';
+
+            $addMovieParams = [
+                ':title' => $movieTitle, 
+                ':release_film' => $movieReleaseFilm, 
+                ':duration' => $movieDuration, 
+                ':synopsys' => $movieSynopsys, 
+                ':grade' => $movieGrade, 
+                ':poster' => $moviePoster, 
+                ':director_id' => $movieDirector
+            ];
+
+            // We execute the query and stock it in an associative array
+            // Stock the information about the film
+            $insertMovie = $dao->executeRequest($sqlAddMovie, $addMovieParams);
+
+        }
+        
+        // Allows us to reload the page after the submit
+        // $this->insertMovieForm();
+        require "view/insert/insertMovieForm.php";
     }
    
 }
