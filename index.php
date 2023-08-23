@@ -50,12 +50,12 @@ if (isset($_GET['action'])) {
             $ctrlGenre->listGenres();
             break;
 
-        case "listRoles":
-            $ctrlRole->listRoles();
-            break;
+        // case "listRoles":
+        //     $ctrlRole->listRoles();
+        //     break;
 
-        case "listDirectors":
-            $ctrlPerson->listDirectors();
+        // case "listDirectors":
+        //     $ctrlPerson->listDirectors();
         
         // DETAIL
         case "detailsMovie":
@@ -83,11 +83,30 @@ if (isset($_GET['action'])) {
             $ctrlGenre->addGenreForm();
             break;
 
+        case "addGenre":
+            $ctrlGenre->addGenre();
+            break;
+
         case "addActorForm":
             $ctrlPerson->addActorForm();
             break;
 
+        case "addActor":
+            $ctrlPerson->addActor();
+            break;
+
+        case "addDirectorForm":
+            $ctrlPerson->addDirectorForm();
+            break;
+
+        case "addDirector":
+            $ctrlPerson->addDirector();
+            break;
+
         // UPDATE
+        case "updateActor":
+            $ctrlPerson->updateActor($id);
+            break;
 
         // DEFAULT
         default:

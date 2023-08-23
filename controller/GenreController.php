@@ -81,7 +81,7 @@ class GenreController
             $dao = new DAO();
 
             // (id_genre, label) : respecter l'ordre dans la BDD si pas de parenthèses avant le VALUES
-            $sqlGenre = "INSERT INTO genre (label)
+            $sqlGenre = "INSERT INTO Genre (label)
                 VALUES (:label)
             ;";
 
@@ -100,12 +100,7 @@ class GenreController
             } catch (\Throwable $error) {
                 // si une exception/erreur est levée (thrown), alors on l'attrape (catch) et on la gère manuellement
                 $isAddGenreSuccess = false;
-                $globalMessage = "L'enregistrement a échoué suite à une erreur technique";
-            }
-            $isAddGenreSuccess = $dao->executeRequest($sqlGenre, $genreParams);
-
-            if (!$isAddGenreSuccess) {
-                $globalMessage = "L'enregistrement a échoué";
+                $globalMessage = "This genre already exists.";
             }
         } else {
             // le formulaire est invalide

@@ -22,8 +22,6 @@ ob_start(); // Enclenche la temporisation de sortie
 
 </div>
 
-
-
 <?php
 $title = "List Actors";
 $content = ob_get_clean();

@@ -12,22 +12,30 @@ ob_start();
     <form method="POST" action="index.php?action=insertMovie">
         <label>Title</label>
         <input type="text" name="movieTitle" required>
-        <label>Release Film</label>
-        <input type="text" name="movieReleaseFilm" required>
-        <label>Duration</label>
-        <input type="text" name="movieDuration" required>
+        <label>Release Film (DD-MM-YYYY)</label>
+        <input type="date" name="movieReleaseFilm" placeholder="DD-MM-YYYY" required>
+        <label>Duration (min)</label>
+        <input type="text" name="movieDuration" placeholder="min" required>
         <label>Synopsys</label>
-        <input type="text" name="movieSynopsys" required>
-        <label>Grade</label>
-        <input type="text" name="movieGrade" required>
+        <textarea name="movieSynopsys" id="" cols="10" rows="0" required></textarea>
+        <label>Grade (/5)</label>
+        <input type="text" name="movieGrade" placeholder="/5" required>
         <label>Poster</label>
-        <input type="text" name="moviePoster" required>
+        <input type="file" name="moviePoster" required>
 
-        <!-- <label for="select-genre">Genre :</label> -->
+        <!-- On récupère les infos du réalisateur via la clé étrangère director_id dans la table Movie -->
+        <p>Director :</p>
+        <label for="select-director">Director :</label>
+        <select type="text" id="select-director" name="movieDirector" required>
+            <!--  $directors related to the insertController.php file and insertMovieForm() method -->
+            <?php while ($director = $directors->fetch()) { ?> 
+            <option value="<?= $director['id_director']?>"><?= $director['firstname']. ' '.$director['lastname'] ?></option>
+            <?php } ?>
+        </select>
+
+        <!-- Choix des genres à cocher : Plusieurs genres par film possible -->
         <p>Genre :</p>
-        <!-- <select id="select-genre" name="movieGenre"> -->
-            <!-- <option>Select the genre</option> -->
-            <!--  $directors related to the insertController.php file and showMovieForm() method -->
+            <!--  $genres related to the insertController.php file and showMovieForm() method -->
             <?php while ($genre = $genres->fetch()) { ?>
             <?php /* <option value="<?= $genre[id_genre] ?>"> <?= $genre['genre'] ?> </option> */ ?>
             <input type="checkbox" id="checkbox-genre-<?= $genre["id_genre"] ?>" name="movieGenres[]" value="<?= $genre["id_genre"] ?>">
@@ -35,14 +43,6 @@ ob_start();
             <?php } ?>
         </select>
 
-        <p>Director :</p>
-        <label for="select-director">Director :</label>
-        <select type="text" id="select-director" name="movieDirector" required>
-            <!--  $directors related to the insertController.php file and showMovieForm() method -->
-            <?php while ($director = $directors->fetch()) { ?> 
-            <option value="<?= $director['id_director']?>"><?= $director['lastname']. ' '. $director['firstname'] ?></option>
-            <?php } ?>
-        </select>
 
         <p>Casting</p>
         <select type="text" id="select-casting" name="movieActor" required>
@@ -60,7 +60,9 @@ ob_start();
 
         <!-- Input: submit request to FilmController.php -->
         <!-- Input name must be identical to the insertMovie() function -->
-        <input type="submit" class="insert" name="insertMovie" value="ADD" />
+        <button type="submit">Save</button>
+
+        <a href="index.php?action=listMovies">Return</a>
 
     </form>
 

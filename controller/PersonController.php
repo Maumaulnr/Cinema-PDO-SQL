@@ -58,6 +58,7 @@ class PersonController
     public function updateActor() {
         $dao = new DAO();
 
+        $actorId = filter_input(INPUT_POST, "id_person", FILTER_SANITIZE_NUMBER_INT);;
         $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -86,7 +87,10 @@ class PersonController
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
 
+        $insertPersonId = filter_input(INPUT_POST, "insertPersonId", FILTER_SANITIZE_NUMBER_INT);
+
         // vars
+        $isAddPersonActorSuccess = false;
         $isAddActorSuccess = false;
         $globalMessage = "L'enregistrement a bien été effectué";
         $formValues = null;
@@ -95,9 +99,9 @@ class PersonController
         $isFormValid = true;
         $errorMessages = [];
 
-        // label est obligatoire
-        // si label est vide
-        if($label == "") {
+        // actorLastname, ... sont obligatoire
+        // si actorLastname, ... sont vide
+        if($actorLastname && $actorFirstname && $actorGenderPerson && $actorBirthDate == "") {
             $isFormValid = false;
             $errorMessages["actorLastname"] = "Ce champ est obligatoire";
             $errorMessages["actorFirstname"] = "Ce champ est obligatoire";
@@ -106,7 +110,7 @@ class PersonController
         }
 
         // actorLastname && actorFirstname ne doivent pas dépasser 30 caractères
-        if(strlen($actorLastname, $actorFirstname) > 30) {
+        if(strlen($actorLastname && $actorFirstname) > 30) {
             $isFormValid = false;
             $errorMessages["actorLastname"] = "Ce champ est limité à 30 caractères";
             $errorMessages["actorFirstname"] = "Ce champ est limité à 30 caractères";
@@ -120,38 +124,42 @@ class PersonController
             $dao = new DAO();
 
             // respecter l'ordre dans la BDD si pas de parenthèses avant le VALUES
-            $sqlPersonActor = "INSERT INTO person(lastname, firstname, gender_person, birth_date, id_person)
-                                VALUES (:lastname, :firstname, :gender_person, :birth_date, :id_person)
+            $sqlPersonActor = "INSERT INTO person(lastname, firstname, gender_person, birth_date)
+                                VALUES (:lastname, :firstname, :gender_person, :birth_date)
                                 ;";
 
-            $sqlInsertActor = "INSERT INTO actor(id_person, id_actor)
-                                VALUES (:id_person, :id_actor)
+            $sqlInsertActor = "INSERT INTO actor(person_id)
+                                VALUES (:person_id)
                                 ;";
 
             // "label" doit être identique à :label
-            $actorParams = [
+            $personActorParams = [
                 "actorLastname" => $actorLastname,
                 "actorFirstname" => $actorFirstname,
                 "actorGenderPerson" => $actorGenderPerson,
                 "actorBirthDate" => $actorBirthDate
             ];
 
+            $insertActorParams = [
+                "person_id" => $insertPersonId
+            ];
+
             // On met dans le try (on essaie) les lignes qui ont une chance plus élevée de lever (throw) une exception/erreur
             try {
-                $isAddActorSuccess = $dao->executeRequest($sqlPersonActor, $sqlInsertActor, $actorParams);
+                $isAddPersonActorSuccess = $dao->executeRequest($sqlPersonActor, $personActorParams);
+                $isAddActorSuccess = $dao->executeRequest($sqlInsertActor, $insertActorParams);
 
-                if (!$isAddActorSuccess) {
+                if (!$isAddPersonActorSuccess && !$isAddActorSuccess) {
                     $globalMessage = "L'enregistrement a échoué";
                 }
             } catch (\Throwable $error) {
                 // si une exception/erreur est levée (thrown), alors on l'attrape (catch) et on la gère manuellement
+                $isAddPersonActorSuccess = false;
                 $isAddActorSuccess = false;
                 $globalMessage = "L'enregistrement a échoué suite à une erreur technique";
-            }
-            $isAddActorSuccess = $dao->executeRequest($sqlPersonActor, $sqlInsertActor, $actorParams);
 
-            if (!$isAddActorSuccess) {
-                $globalMessage = "L'enregistrement a échoué";
+                // var_dump($error);
+                // die();
             }
         } else {
             // le formulaire est invalide
@@ -217,6 +225,17 @@ class PersonController
         // Reload the page after submit
         $this->insertCastingForm();
     }
+
+    // DIRECTOR
+    public function addDirectorForm() {
+        require 'view/director/addDirectorForm.php';
+    }
+
+    public function addDirector() {
+
+    }
+
+    // ROLE
 
 }
 

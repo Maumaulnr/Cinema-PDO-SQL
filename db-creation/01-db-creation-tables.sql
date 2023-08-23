@@ -2,10 +2,10 @@ CREATE DATABASE IF NOT EXISTS `Cinema-PDO-01` /*!40100 COLLATE 'utf8mb4_0900_ai_
 
 USE `Cinema-PDO-01`;
 
-CREATE TABLE IF NOT EXISTS Gender(
-   id_gender INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS Genre(
+   id_genre INT NOT NULL AUTO_INCREMENT,
    label VARCHAR(30) NOT NULL,
-   PRIMARY KEY(id_gender)
+   PRIMARY KEY(id_genre)
 );
 
 CREATE TABLE IF NOT EXISTS Role(
@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS Person(
    lastname VARCHAR(70) NOT NULL,
    gender VARCHAR(30) NOT NULL,
    birth_date DATE NOT NULL,
-   is_alive TINYINT(1) NOT NULL,
    PRIMARY KEY(id_person)
 );
 
@@ -55,10 +54,10 @@ CREATE TABLE IF NOT EXISTS Movie(
 
 CREATE TABLE IF NOT EXISTS Movie_Genre_Link(
    movie_id INT,
-   gender_id INT,
-   PRIMARY KEY(movie_id, gender_id),
+   genre_id INT,
+   PRIMARY KEY(movie_id, genre_id),
    FOREIGN KEY(movie_id) REFERENCES Movie(id_movie),
-   FOREIGN KEY(gender_id) REFERENCES Gender(id_gender)
+   FOREIGN KEY(genre_id) REFERENCES Genre(id_genre)
 );
 
 CREATE TABLE IF NOT EXISTS Casting(

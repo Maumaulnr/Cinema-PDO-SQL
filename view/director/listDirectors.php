@@ -1,31 +1,31 @@
 <?php
-
-ob_start(); //def : Enclenche la temporisation de sortie
-?>
-
-<h2>List of Directors</h2>
-
-<?php
-
-while ($director = $directors->fetch()) {
+ob_start(); // Enclenche la temporisation de sortie
 
 ?>
 
-    <p><?= $director['firstname'] ?></p>
-    <p><?= $director['lastname'] ?></p>
-    <p><?= $director['birth_date'] ?></p>
-    <p><?= $director['gender_person'] ?></p>
+<!-- list of the directors -->
 
+<div class="container">
+    <h1>List Directors</h1>
 
-<?php } ?>
+    <ul class="list-divider">
+        <?php while ($director = $directors->fetch()) { ?>
+            <li>
+                <a href="index.php?action=detailsDirector&id= <?= $director['id_director'] ?>"><?= $director['lastname']. ' '. $director['firstname']; ?></a>
+            </li>
+        <?php } ?>
+    </ul>
+    
+    <a href="index.php?action=addDirectorForm">
+        <button>Add Director</button>
+    </a>
 
+</div>
 
 
 
 <?php
-
-$content = ob_get_clean(); //def : Exécute successivement ob_get_contents() et ob_end_clean(). Lit le contenu courant du tampon de sortie puis l'efface
-
-// Redirecting to template.php
+$title = "List Directors";
+$content = ob_get_clean();
 require "view/template.php";
 ?>

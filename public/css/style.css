@@ -171,3 +171,35 @@ h2 {
   background-color: beige;
   filter: opacity(0.9);
 }
+
+.list-divider > li {
+  list-style: none;
+}
+
+/* Details Actor */
+.details-actor {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* Add Actor Form */
+.add-actor {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* Add Actor Form */
+.add-genre {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* FOOTER */
+.footer-cinema {
+  width: 100%;
+  background-color: orange;
+  filter: opacity(0.9);
+}

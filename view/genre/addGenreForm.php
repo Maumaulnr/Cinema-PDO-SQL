@@ -2,7 +2,7 @@
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 
-    <div class="">
+    <div class="add-genre">
         <h1>Add Genre</h1>
 
     <?php

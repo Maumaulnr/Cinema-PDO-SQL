@@ -2,7 +2,7 @@
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 
-    <div class="">
+    <div class="add-actor">
         <h1>Add Actors</h1>
 
     <?php
@@ -36,7 +36,7 @@ ob_start(); // Enclenche la temporisation de sortie
             <input type="radio" id="actor-label" name="actorGenderPerson" />
 
             <label for="actor-label">Actor Birth Date</label>
-            <input type="date" id="actor-label" name="actorBirthDate" />
+            <input type="date" id="actor-label" name="actorBirthDate" placeholder="DD-MM-YYYY" required/>
 
             <?php
             // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"
