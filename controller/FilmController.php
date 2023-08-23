@@ -47,7 +47,7 @@ class FilmController
         // // actors
         // $sqlActors = 'SELECT *
         //     FROM casting c
-        //         INNER JOIN actor act ON c.actor_id = act.id_actor
+        //     INNER JOIN actor act ON c.actor_id = act.id_actor
         //     WHERE c.movie_id = :movie_id
         // ';
         
@@ -56,7 +56,7 @@ class FilmController
         // // roles
         // $sqlRoles = 'SELECT *
         //     FROM casting c
-        //         INNER JOIN role r ON c.role_id = r.id_role
+        //     INNER JOIN role r ON c.role_id = r.id_role
         //     WHERE c.movie_id = :movie_id
         // ';
         
@@ -106,13 +106,12 @@ class FilmController
         $sqlGenres = "SELECT id_genre, label FROM genre ORDER BY label ASC;";
         $genres = $dao->executeRequest($sqlGenres);
 
-        require "view/insert/insertMovieForm.php";
+        require "view/movie/insertMovieForm.php";
     }
 
     public function insertMovie() {
         $dao = new DAO();
 
-        // if(isset($_POST['submit'])) {
             $movieTitle = filter_input(INPUT_POST, "movieTitle", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $movieReleaseFilm = filter_input(INPUT_POST, "movieReleaseFilm", FILTER_SANITIZE_NUMBER_INT);
             $movieDuration = filter_input(INPUT_POST, "movieDuration", FILTER_SANITIZE_NUMBER_INT);
@@ -126,8 +125,8 @@ class FilmController
             $movieActor = filter_input(INPUT_POST, "movieActor", FILTER_SANITIZE_NUMBER_INT);
             $movieRole = filter_input(INPUT_POST, "movieRole", FILTER_SANITIZE_NUMBER_INT);
 
-            $movieGenres = filter_input(INPUT_POST, "movieGenre", FILTER_SANITIZE_NUMBER_INT)
-        // }
+            $movieGenres = filter_input(INPUT_POST, "movieGenre", FILTER_SANITIZE_NUMBER_INT);
+
 
         if(!empty($movieTitle) && !empty($movieReleaseFilm) && !empty($movieDuration) && !empty($movieSynopsys) && !empty($movieGrade) && !empty($moviePoster) && !empty($movieDirector)) {
             // Insert movie details
@@ -150,9 +149,23 @@ class FilmController
 
         }
         
-        // Allows us to reload the page after the submit
-        // $this->insertMovieForm();
         require "view/insert/insertMovieForm.php";
+    }
+
+    // DELETE
+    public function deleteMovieForm() {
+        $dao = new DAO();
+
+        $sqlDelete = "SELECT m.id_movie, m.title, m.release_film, m.duration, m.synopsys, d.firstname AS firstnameDirector, d.lastname AS lastnameDirector 
+        FROM movie m 
+        INNER JOIN director dir ON m.director_id = dir.id_director
+        INNER JOIN person d ON dir.person_id = d.id_person
+        ORDER BY m.id_movie ASC;" ;
+
+        $movies = $dao->executeRequest($sqlDelete);
+
+        // Redirection to the deleteMovie.php
+        require "view/delete/deleteMovieForm.php";
     }
    
 }

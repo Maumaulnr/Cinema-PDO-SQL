@@ -8,38 +8,33 @@ $movie = $detailsMovie->fetch();
 
 ?>
 
-<div class="">
-    <div class="">
-        <h1>Details of movie <span class=""><?= $movie['title']; ?></span></h1>
 
-        <div class="flex-center" uk-grid>
+<div class="details-movie">
 
-                <div class="" scrollspy="target: > div; cls: animation-fade; delay: 500">
-                    <div class="card card-small card-default height-match border-rounded">
-                        <figure class="poster height-match border-rounded">
-                            <img class="border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">
-                        </figure>
-                        <p><strong>Release Year:</strong> <?= $movie['release_film']; ?></p>
-                        <p><strong>Duration:</strong> <?= $movie['duration']; ?> minutes</p>
-                        <p><strong>Synopsis:</strong> <?= $movie['synopsys']; ?></p>
-                        <p><strong>Rating:</strong> <?= $movie['grade']; ?> /5</p>
+    <h1>Details of movie : <br><span class="details-movie-title"><?= $movie['title']; ?></span></br></h1>
 
-                        <!-- Director informations-->
-                        <p><strong>Director:</strong> <?= $movie['firstnameDirector']. ' '. $movie['lastnameDirector']; ?></p>
-                        
-                        <h3>Casting</h3>
-                        <?php while ($casting = $detailsCastings->fetch()) { 
-                        ?>
-                        <!-- Casting informations -->
-                        <p><?= $casting['firstnameActor']. ' '. $casting['lastnameActor']. ': '. $casting['name_role'] ; ?></p>
-                        <?php } ?>
-                    </div>
-                </div>
+    <div class="card card-small card-default height-match border-rounded">
+        <figure class="poster height-match border-rounded">
+            <img class="border-rounded" src="./public/image/<?= $movie["poster"]; ?>" width="300">
+        </figure>
+        <p><strong>Release Year:</strong> <?= $movie['release_film']; ?></p>
+        <p><strong>Duration:</strong> <?= $movie['duration']; ?> minutes</p>
+        <p><strong>Synopsis:</strong> <?= $movie['synopsys']; ?></p>
+        <p><strong>Rating:</strong> <?= $movie['grade']; ?> /5</p>
 
-        </div>
-
+        <!-- Director informations-->
+        <p><strong>Director:</strong> <?= $movie['firstnameDirector']. ' '. $movie['lastnameDirector']; ?></p>
+        
+        <h3>Casting</h3>
+        <?php while ($casting = $detailsCastings->fetch()) { 
+        ?>
+        <!-- Casting informations -->
+        <p><?= $casting['firstnameActor']. ' '. $casting['lastnameActor']. ': '. $casting['name_role'] ; ?></p>
+        <?php } ?>
     </div>
+    
 </div>
+
 
 
 

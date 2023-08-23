@@ -1,5 +1,4 @@
 <!-- Appelle les contrôleurs -->
-<p>index page</p>
 
 <?php
 
@@ -7,9 +6,11 @@ require_once "controller/FilmController.php";
 
 require_once "controller/HomeController.php";
 
-require_once "controller/InsertController.php";
+require_once "controller/GenreController.php";
 
-require_once "controller/DeleteController.php";
+require_once "controller/PersonController.php";
+
+require_once "controller/RoleController.php";
 
 
 // Appel de la function autoload pour charger automatiquement tout les controllers crées
@@ -24,7 +25,6 @@ $ctrHome = new HomeController();
 $ctrGenre = new GenreController();
 $ctrPerson = new PersonController();
 $ctrRole = new RoleController();
-$ctrDelete = new DeleteController();
 
 // protection of injection in URL
 // $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -35,16 +35,12 @@ if (isset($_GET['action'])) {
     // Choosing the next step based on each specific action
     switch ($_GET['action']) {
             //insert here all the request to generate new page
+            
+        // LIST
         case "listMovies":
             $ctrFilm->listMovies();
             break;
-        // default:
-        //     $ctrHome->HomePage();
-        
 
-        // LIST
-        case "listGenres":
-            $ctrFilm->listGenres();
         
         case "listActors":
             $ctrFilm->listActors();
@@ -67,23 +63,36 @@ if (isset($_GET['action'])) {
             break;
 
         case "detailsGenre":
-            $ctrFilm->detailsGenre($id);
+            $ctrGenre->detailsGenre($id);
+            break;
+        
+        case "detailsActor":
+            $ctrPerson->detailsActor($id);
             break;
         
         
         // ADD
         case "insertMovieForm":
-            $ctrInsert->insertMovieForm();
+            $ctrFilm->insertMovieForm();
             break;
         case "insertMovie":
-            $ctrInsert->insertMovie();
+            $ctrFilm->insertMovie();
             break;
-        // default:
-        //     $ctrHome->HomePage();
+
+        case "addGenreForm":
+            $ctrGenre->addGenreForm();
+            break;
+
+        case "addActorForm":
+            $ctrPerson->addActorForm();
+            break;
 
         // UPDATE
 
         // DEFAULT
+        default:
+            $ctrHome->homePage();
+            break;
        
     }
 } else {

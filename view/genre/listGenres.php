@@ -2,23 +2,28 @@
 // require_once 'app/DAO.php';
 
 ob_start(); // Enclenche la temporisation de sortie
-?>
-<p>listGenders</p>
 
-    <div class="">
-        <h1>List of Genres</h1>
+// Calculate the number of genres.
+$genresCount = $genres->rowCount();
+
+?>
+
+    <div class="list-genres">
+        <h1>List Genres</h1>
 
         <!-- Si il y a plus d'un genre alors on ajoute un "s" sinon rien -->
-        <p>Il existe <?= $genreCount ?> genre<?= $genreCount > 1 ? "s" : "" ?>. </p>
+        <p>Il existe <?= $genresCount ?> genre<?= $genresCount > 1 ? "s" : "" ?>.</p>
 
-        <ul class="">
+        <div class="">
             <?php while ($genre = $genres->fetch()) { ?>
-                <li><a href="index.php?action=genreDetails&id=<?= $genre['id_genre']; ?>"><?= $genre['label']; ?></a></li>
+                <a href="index.php?action=detailsGenre&id=<?= $genre['id_genre'] ?>">
+                    <p><?= $genre['label'] ?></p>
+                </a>
             <?php } ?>
-        </ul>
+        </div>
         
         <a href="index.php?action=addGenreForm">
-            <button>Ajouter Genre</button>
+            <button>Add Genre</button>
         </a>
 
     </div>

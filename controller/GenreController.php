@@ -6,13 +6,26 @@ require_once 'app/DAO.php';
 
 class GenreController
 {
+    // LIST GENRES
+    public function listGenres() {
+        $dao = new DAO();
+
+        $sqlListGenres = "SELECT g.label
+                        FROM genre g
+                        ORDER BY label ASC;";
+        
+        $genres = $dao->executeRequest($sqlListGenres);
+
+        require "view/genre/listGenres.php";
+    }
+
     // Affiche les films associés à un genre spécifique
-    public function genreDetails($id)
+    public function detailsGenre($id)
     {
         $dao = new DAO();
 
-        if (isset($_GET['id'])) {
-            $genreId = $_GET['id'];
+        // if (isset($_GET['id'])) {
+        //     $genreId = $_GET['id'];
 
             // Récupérer les films associés à ce genre
             $sqlGenre = "SELECT m.id_movie, m.title, m.poster, g.label
@@ -22,13 +35,15 @@ class GenreController
             WHERE mgl.genre_id = :genre_id;";
 
             $paramsGenre = [':genre_id' => $id];
+
             $detailsGenre = $dao->executeRequest($sqlGenre, $paramsGenre);
 
-            // $genres = $dao->executeRequest("SELECT * FROM Genre");
-
-            require 'view/genre/detailsGenre.php';
         }
+
+    public function addGenreForm() {
+        require 'view/genre/addGenreForm.php';
     }
+    
 
     // ADD GENRE MOVIE
     public function addGenre() {
@@ -103,7 +118,7 @@ class GenreController
             ];
         }
 
-        require "view/genre/addGenreForm.php";
+        require 'view/genre/addGenreForm.php';
     }
 }
 
