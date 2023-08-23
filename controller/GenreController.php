@@ -24,28 +24,27 @@ class GenreController
     {
         $dao = new DAO();
 
-        // if (isset($_GET['id'])) {
-        //     $genreId = $_GET['id'];
-
             // Récupérer les films associés à ce genre
             $sqlGenre = "SELECT m.id_movie, m.title, m.poster, g.label
             FROM movie m
             INNER JOIN movie_genre_link mgl ON m.id_movie = mgl.movie_id
             INNER JOIN genre g ON mgl.genre_id = g.id_genre
-            WHERE mgl.genre_id = :genre_id;";
+            WHERE mgl.genre_id = :genre_id
+            ORDER BY label ASC;";
 
             $paramsGenre = [':genre_id' => $id];
 
             $detailsGenre = $dao->executeRequest($sqlGenre, $paramsGenre);
 
+            require 'view/genre/detailsGenre.php';
+
         }
 
+    // ADD GENRE MOVIE
     public function addGenreForm() {
         require 'view/genre/addGenreForm.php';
     }
-    
 
-    // ADD GENRE MOVIE
     public function addGenre() {
 
         // filtrer ce qui arrive en POST

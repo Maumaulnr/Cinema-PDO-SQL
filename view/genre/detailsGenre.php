@@ -11,13 +11,13 @@ ob_start(); // Enclenche la temporisation de sortie
         <p>Film's Genre :<?= $genre['label']; ?></p>
     </div>
 
-    <a href="index.php?action=detailsMovie&id=<?= $genre['id_movie'] ?>">
-        <p><?= $genre['title'] ?></p>
+    <a href="index.php?action=detailsGenre&id=<?= $movie['id_movie'] ?>">
+        <p><?= $movie['title'] ?></p>
     </a>
 
-    <?php while ($genre = $genres->fetch()) { ?>
-        <a href="index.php?action=detailsMovie&id=<?= $genre['id_movie'] ?>">
-            <p><?= $genre['title'] ?></p>
+    <?php while ($genre = $detailsGenre->fetch()) { ?>
+        <a href="index.php?action=detailsGenre&id=<?= $movie['id_movie'] ?>">
+            <p><?= movie['title'] ?></p>
         </a>
     <?php } ?>
 

@@ -36,7 +36,8 @@ class FilmController
         -- INNER JOIN actor act ON c.actor_id = act.id_actor
         -- INNER JOIN person a ON act.person_id = a.id_person
         -- INNER JOIN role r ON c.role_id = r.id_role
-        WHERE m.id_movie = :movie_id';
+        WHERE m.id_movie = :movie_id
+        ORDER BY title ASC;';
 
         $paramsMovie = [':movie_id' => $id];
         
@@ -74,8 +75,6 @@ class FilmController
         ';
         
         $detailsCastings = $dao->executeRequest($sqlCastings, $paramsMovie);
-        
-        // $movie = $detailsMovie->fetch();
 
         require 'view/movie/detailsMovie.php';
     }

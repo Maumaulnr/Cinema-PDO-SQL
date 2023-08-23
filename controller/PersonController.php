@@ -39,17 +39,17 @@ class PersonController
     public function filmsActor($id) {
         $dao = new DAO();
 
-        $sqlFilmsActor = "SELECT m.title, p.lastname, p.firstname, c.actor_id, a.id_actor, m.id_movie
-                        FROM person p
-                        INNER JOIN actor a ON p.id_person = a.person_id
-                        INNER JOIN casting c ON a.id_actor = c.actor_id
+        $sqlFilmsActor = "SELECT a.firstname AS firstnameActor, a.lastname AS lastnameActor, m.title, r.name_role
+                        FROM casting c
+                        INNER JOIN actor act ON c.actor_id = act.id_actor
+                        INNER JOIN person a ON act.person_id = a.id_person
+                        INNER JOIN role r ON c.role_id = r.id_role
                         INNER JOIN movie m ON c.movie_id = m.id_movie
-                        WHERE a.id_actor = :actor_id
-                        ORDER BY m.title ASC;";
+                        WHERE a.id_person = person_id;";
 
         $paramsFilmsActor = [':actor_id' => $id];
 
-        $actors = $dao->executeRequest($sqlFilmsActor, $paramsFilmsActor);
+        $filmsActor = $dao->executeRequest($sqlFilmsActor, $paramsFilmsActor);
 
         require "view/actor/filmsActor.php";
     }

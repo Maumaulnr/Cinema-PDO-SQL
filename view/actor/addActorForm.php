@@ -25,11 +25,18 @@ ob_start(); // Enclenche la temporisation de sortie
             <label for="actor-label">Actor Firstname</label>
             <input type="text" id="actor-label" name="actorFirstname" placeholder="Firstname" maxlenght="30" />
 
-            <label for="actor-label">Actor Gender</label>
-            <input type="checkbox" id="actor-label" name="actorGenderPerson" />
+            <p>Gender :</p>
+            <label for="actor-label">Male</label>
+            <input type="radio" id="actor-label" name="actorGenderPerson" />
+
+            <label for="actor-label">Female</label>
+            <input type="radio" id="actor-label" name="actorGenderPerson" />
+
+            <label for="actor-label">Other</label>
+            <input type="radio" id="actor-label" name="actorGenderPerson" />
 
             <label for="actor-label">Actor Birth Date</label>
-            <input type="text" id="actor-label" name="actorBirthDate" placeholder="JJ-MM-AAAA" maxlenght="10" />
+            <input type="date" id="actor-label" name="actorBirthDate" />
 
             <?php
             // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"

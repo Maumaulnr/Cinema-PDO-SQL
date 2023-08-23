@@ -2,6 +2,12 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  text-align: center;
+}
+
+:root {
+  --color-success: rgb(34, 211, 93);
+  --color-error: rgb(236, 121, 110);
 }
 
 body:nth-child(header, main) {
@@ -19,6 +25,7 @@ body {
   object-fit: cover; */
   /* background-color: rgb(175, 131, 0); */
   font-family: "Segoe UI", "Roboto", Tahoma;
+  min-height: 100vh;
 }
 
 header, main {
@@ -131,6 +138,24 @@ header, main {
   width: 100%;
   background-color: beige;
   filter: opacity(0.9);
+}
+
+/* Add Genre */
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-success {
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.text-error {
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
 }
 
 /* InsertMovie */

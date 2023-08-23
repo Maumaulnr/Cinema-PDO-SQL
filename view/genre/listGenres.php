@@ -14,19 +14,19 @@ $genresCount = $genres->rowCount();
         <!-- Si il y a plus d'un genre alors on ajoute un "s" sinon rien -->
         <p>Il existe <?= $genresCount ?> genre<?= $genresCount > 1 ? "s" : "" ?>.</p>
 
-        <div class="">
+        <ul class="">
             <?php while ($genre = $genres->fetch()) { ?>
-                <a href="index.php?action=detailsGenre&id=<?= $genre['id_genre'] ?>">
-                    <p><?= $genre['label'] ?></p>
-                </a>
+                <li><?= $genre["label"] ?></li>
+                <li><a href="index.php?action=detailsGenre&id=<?= $genre['id_genre'] ?>"><?= $genre["label"] ?></a></li>
             <?php } ?>
-        </div>
+        </ul>
         
         <a href="index.php?action=addGenreForm">
             <button>Add Genre</button>
         </a>
 
     </div>
+
 
 <?php
 $title = "List of Genres";

@@ -20,84 +20,84 @@ spl_autoload_register(function ($class_name) {
 
 // variable declaration
 
-$ctrFilm = new FilmController();
-$ctrHome = new HomeController();
-$ctrGenre = new GenreController();
-$ctrPerson = new PersonController();
-$ctrRole = new RoleController();
+$ctrlFilm = new FilmController();
+$ctrlHome = new HomeController();
+$ctrlGenre = new GenreController();
+$ctrlPerson = new PersonController();
+$ctrlRole = new RoleController();
 
 // protection of injection in URL
 // $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 
-// Verify if there's an action & what to do next
+// si on reçoit une action (en GET)
 if (isset($_GET['action'])) {
-    // Choosing the next step based on each specific action
+    // En fonction de l'action reçue
     switch ($_GET['action']) {
             //insert here all the request to generate new page
             
         // LIST
         case "listMovies":
-            $ctrFilm->listMovies();
+            $ctrlFilm->listMovies();
             break;
 
         
         case "listActors":
-            $ctrFilm->listActors();
+            $ctrlFilm->listActors();
             break;
 
         case "listGenres":
-            $ctrGenre->listGenres();
+            $ctrlGenre->listGenres();
             break;
 
         case "listRoles":
-            $ctrRoles->listRoles();
+            $ctrlRole->listRoles();
             break;
 
         case "listDirectors":
-            $ctrPerson->listDirectors();
+            $ctrlPerson->listDirectors();
         
         // DETAIL
         case "detailsMovie":
-            $ctrFilm->detailsMovie($id);
+            $ctrlFilm->detailsMovie($id);
             break;
 
         case "detailsGenre":
-            $ctrGenre->detailsGenre($id);
+            $ctrlGenre->detailsGenre($id);
             break;
         
         case "detailsActor":
-            $ctrPerson->detailsActor($id);
+            $ctrlPerson->detailsActor($id);
             break;
         
         
         // ADD
         case "insertMovieForm":
-            $ctrFilm->insertMovieForm();
+            $ctrlFilm->insertMovieForm();
             break;
         case "insertMovie":
-            $ctrFilm->insertMovie();
+            $ctrlFilm->insertMovie();
             break;
 
         case "addGenreForm":
-            $ctrGenre->addGenreForm();
+            $ctrlGenre->addGenreForm();
             break;
 
         case "addActorForm":
-            $ctrPerson->addActorForm();
+            $ctrlPerson->addActorForm();
             break;
 
         // UPDATE
 
         // DEFAULT
         default:
-            $ctrHome->homePage();
+            $ctrlHome->homePage();
             break;
        
     }
 } else {
     //Si l'url de contient pas d'action enregistrer, ont fait appel au constructeur homepage, pour afficher la page d'acceuil par défaut
-    $ctrHome->homePage();
+    $ctrlHome->homePage();
 }
 
 ?>
