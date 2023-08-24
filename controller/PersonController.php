@@ -39,15 +39,14 @@ class PersonController
     public function filmsActor($id) {
         $dao = new DAO();
 
-        $sqlFilmsActor = "SELECT a.firstname AS firstnameActor, a.lastname AS lastnameActor, m.title, r.name_role
+        $sqlFilmsActor = "SELECT  m.title, r.name_role
                         FROM casting c
-                        INNER JOIN actor act ON c.actor_id = act.id_actor
-                        INNER JOIN person a ON act.person_id = a.id_person
+                        INNER JOIN actor a ON c.actor_id = a.id_actor
                         INNER JOIN role r ON c.role_id = r.id_role
                         INNER JOIN movie m ON c.movie_id = m.id_movie
-                        WHERE a.id_person = person_id;";
+                        WHERE c.actor_id = :id_actor;";
 
-        $paramsFilmsActor = [':actor_id' => $id];
+        $paramsFilmsActor = [':id_actor' => $id];
 
         $filmsActor = $dao->executeRequest($sqlFilmsActor, $paramsFilmsActor);
 
@@ -58,17 +57,17 @@ class PersonController
     public function updateActor() {
         $dao = new DAO();
 
-        $actorId = filter_input(INPUT_POST, "id_person", FILTER_SANITIZE_NUMBER_INT);;
-        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorIdPerson = filter_input(INPUT_POST, "id_person", FILTER_SANITIZE_NUMBER_INT);;
         $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
 
         $sqlUpdateActor = "UPDATE person p
-                        SET actorLastname = '" .$actorLastname. "', actorFirstname = '" .$actorFirstname. "', actorGenderPerson = '" .$actorGenderPerson. "', actorBirthDate = '" .$actorBirthDate. "'
-                        WHERE p.id_person = ". $actorId;
+                        SET actorFirstname = '" .$actorFirstname. "', actorLastname = '" .$actorLastname. "', actorGenderPerson = '" .$actorGenderPerson. "', actorBirthDate = '" .$actorBirthDate. "'
+                        WHERE p.id_person = ". $actorIdPerson;
 
-       $actors = $dao->executeRequest($sqlUpdateActor);
+       $actorUpdate = $dao->executeRequest($sqlUpdateActor);
 
        require "view/actor/updateActor.php";
     }
@@ -132,7 +131,7 @@ class PersonController
                                 VALUES (:person_id)
                                 ;";
 
-            // "label" doit être identique à :label
+            // "actorLastname", ... doivent être identique à :actorLastname, ...
             $personActorParams = [
                 "actorLastname" => $actorLastname,
                 "actorFirstname" => $actorFirstname,

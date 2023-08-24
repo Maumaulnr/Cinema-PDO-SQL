@@ -126,6 +126,9 @@ header, main {
   display: flex;
   flex-direction: column;
   padding-left: 20px;
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
 }
 
 .card > p {
@@ -135,6 +138,13 @@ header, main {
 /* List Genres */
 
 .list-genres {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* Details Genre */
+.details-genre {
   width: 100%;
   background-color: beige;
   filter: opacity(0.9);
@@ -178,6 +188,13 @@ h2 {
 
 /* Details Actor */
 .details-actor {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* Actor's Film */
+.films-actor {
   width: 100%;
   background-color: beige;
   filter: opacity(0.9);

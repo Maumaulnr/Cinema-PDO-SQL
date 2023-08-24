@@ -38,6 +38,7 @@ ob_start(); // Enclenche la temporisation de sortie
             <label for="actor-label">Actor Birth Date</label>
             <input type="date" id="actor-label" name="actorBirthDate" placeholder="DD-MM-YYYY" required/>
 
+
             <?php
             // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"
             if (isset($errorMessage) && isset($errorMessage["actorLastname"]) && $errorMessage["actorLastname"] && isset($errorMessage["actorFirstname"]) && $errorMessage["actorFirstname"] && isset($errorMessage["actorGenderPerson"]) && $errorMessage["actorGenderPerson"] && isset($errorMessage["actorBirthDate"]) && $errorMessage["actorBirthDate"]) {

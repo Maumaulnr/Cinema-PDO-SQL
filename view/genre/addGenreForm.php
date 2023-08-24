@@ -33,6 +33,8 @@ ob_start(); // Enclenche la temporisation de sortie
 
             <button type="submit">Save</button>
 
+            <a href="index.php?action=listGenres">Return</a>
+
         </form>
 
     </div>

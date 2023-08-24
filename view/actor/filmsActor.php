@@ -4,16 +4,17 @@ ob_start();
 
 ?>
 
+<div class="films-actor">
 <!-- On veut pouvoir afficher quand on a cliqué sur un acteur les films dans lesquels il a joué et les rôles-->
 
 <h1>Actor's Films</h1>
 
-<div>
-    <?php $actor = $actors->fetch(); ?>
+
+    <?php //$actor = $actors->fetch(); ?>
 
     <?php while ($casting = $filmsActor->fetch()) { ?>
-        <!-- a.firstname AS firstnameActor, a.lastname AS lastnameActor, m.title, r.name_role -->
-        <p><?= $casting['title']. ' '. $casting['firstname']. ' '. $casting['lastname']. ' '. $casting['title']. ' '. $casting['name_role']  ?></p>
+        <!-- (Je veux afficher le titre du film et le rôle que l'acteur a joué) x n -->
+        <p>Movie :<?= $casting['title'].' Role: '.$casting['name_role']  ?></p>
     <?php } ?>
 
     <a href="index.php?action=listActors.php">Return</a>

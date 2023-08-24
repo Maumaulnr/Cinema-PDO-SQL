@@ -32,6 +32,8 @@ $movie = $detailsMovie->fetch();
         <p><?= $casting['firstnameActor']. ' '. $casting['lastnameActor']. ': '. $casting['name_role'] ; ?></p>
         <?php } ?>
     </div>
+
+    <a href="index.php?action=listMovies">Return</a>
     
 </div>
 

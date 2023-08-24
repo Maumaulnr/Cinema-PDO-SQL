@@ -69,6 +69,10 @@ if (isset($_GET['action'])) {
         case "detailsActor":
             $ctrlPerson->detailsActor($id);
             break;
+
+        case "filmsActor":
+            $ctrlPerson->filmsActor($id);
+            break;
         
         
         // ADD
@@ -106,6 +110,11 @@ if (isset($_GET['action'])) {
         // UPDATE
         case "updateActor":
             $ctrlPerson->updateActor($id);
+            break;
+        
+        // DELETE
+        case "deleteGenreForm":
+            $ctrlGenre->delGenre();
             break;
 
         // DEFAULT

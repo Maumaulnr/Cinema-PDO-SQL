@@ -10,7 +10,7 @@ ob_start();
 
     <form method="POST" action="index.php?action=modifyActor">
 
-        <?php $actor = $actors->fetch() ?>
+        <?php $actor = $actorUpdate->fetch() ?>
 
         <!-- Input fields: Lastname -->
         <label for="lastname">Lastname</label>

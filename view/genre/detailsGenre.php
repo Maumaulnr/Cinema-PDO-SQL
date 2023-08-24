@@ -2,24 +2,29 @@
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 
+<!-- On veut les détails du genre donc tous les films qui se rapporte à un genre -->
+
 <div class="details-genre">
 
-    <h2>Details Genre</h2>
+    <?php $genre = $GenreLabel->fetch() ?>
+    <h2>Film's Genre : <strong><?= $genre['label']; ?></strong></h2>
 
     <div>
-        <?php $genre = $genres->fetch(); ?>
-        <p>Film's Genre :<?= $genre['label']; ?></p>
+        
+        
     </div>
 
-    <a href="index.php?action=detailsGenre&id=<?= $movie['id_movie'] ?>">
-        <p><?= $movie['title'] ?></p>
-    </a>
+    <!-- On veut seulement le titre du film -->
+    
+        <p></p>
 
-    <?php while ($genre = $detailsGenre->fetch()) { ?>
-        <a href="index.php?action=detailsGenre&id=<?= $movie['id_movie'] ?>">
-            <p><?= movie['title'] ?></p>
-        </a>
-    <?php } ?>
+    <ul>
+    Movies :
+        <?php while ($movie = $detailsGenre->fetch()) { ?>
+            <li><?= $movie['title'] ?></li>
+        <?php } ?>
+    </ul>
+
 
     <a href="index.php?action=listGenres">Return</a>
 </div>
@@ -30,3 +35,4 @@ $title = "Genre Details";
 $content = ob_get_clean();
 require "view/template.php";
 ?>
+

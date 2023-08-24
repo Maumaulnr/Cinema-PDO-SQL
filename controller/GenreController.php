@@ -10,11 +10,11 @@ class GenreController
     public function listGenres() {
         $dao = new DAO();
 
-        $sqlListGenres = "SELECT g.label
+        $sqlListGenres = "SELECT g.id_genre, g.label
                         FROM genre g
                         ORDER BY label ASC;";
         
-        $genres = $dao->executeRequest($sqlListGenres);
+        $genresList = $dao->executeRequest($sqlListGenres);
 
         require "view/genre/listGenres.php";
     }
@@ -25,16 +25,22 @@ class GenreController
         $dao = new DAO();
 
             // Récupérer les films associés à ce genre
-            $sqlGenre = "SELECT m.id_movie, m.title, m.poster, g.label
+            $sqlGenreLabel = "SELECT g.label
+                            FROM movie_genre_link mgl
+                            INNER JOIN genre g ON mgl.genre_id = g.id_genre
+                            WHERE mgl.genre_id = :genre_id;";
+
+            $paramsDetailsGenre = [':genre_id' => $id];
+
+            $GenreLabel = $dao->executeRequest($sqlGenreLabel, $paramsDetailsGenre);
+
+            $sqlDetailsGenre = "SELECT mgl.genre_id, m.title
             FROM movie m
             INNER JOIN movie_genre_link mgl ON m.id_movie = mgl.movie_id
             INNER JOIN genre g ON mgl.genre_id = g.id_genre
-            WHERE mgl.genre_id = :genre_id
-            ORDER BY label ASC;";
+            WHERE mgl.genre_id = :genre_id;";
 
-            $paramsGenre = [':genre_id' => $id];
-
-            $detailsGenre = $dao->executeRequest($sqlGenre, $paramsGenre);
+            $detailsGenre = $dao->executeRequest($sqlDetailsGenre, $paramsDetailsGenre);
 
             require 'view/genre/detailsGenre.php';
 
@@ -113,6 +119,13 @@ class GenreController
         }
 
         require 'view/genre/addGenreForm.php';
+    }
+
+    // DELETE Genre
+    public function delGenre() {
+        $dao = new DAO();
+
+        $sqlDeleteGenre = "";
     }
 }
 
