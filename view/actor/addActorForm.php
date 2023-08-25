@@ -19,21 +19,21 @@ ob_start(); // Enclenche la temporisation de sortie
 
             <!-- Placeholder : permet d'afficher du texte dans un input, permet d'informer l'utilisateur sur ce qu'il doit écrire -->
             <!-- maxlenght : permet de limiter le nombre de caractères mais ce n'est pas sécurisé car peut être modifié dans le "Inspecter". C'est plus pour le confort de l'utilisateur.  -->
-            <label for="actor-label">Actor Lastname</label>
-            <input type="text" id="actor-label" name="actorLastname" placeholder="Lastname" maxlenght="30" />
-
             <label for="actor-label">Actor Firstname</label>
             <input type="text" id="actor-label" name="actorFirstname" placeholder="Firstname" maxlenght="30" />
-
+            
+            <label for="actor-label">Actor Lastname</label>
+            <input type="text" id="actor-label" name="actorLastname" placeholder="Lastname" maxlenght="30" />
+            
             <p>Gender :</p>
             <label for="actor-label">Male</label>
-            <input type="radio" id="actor-label" name="actorGenderPerson" />
+            <input type="radio" id="actor-label" name="actorGenderPerson" value="Male"/>
 
             <label for="actor-label">Female</label>
-            <input type="radio" id="actor-label" name="actorGenderPerson" />
+            <input type="radio" id="actor-label" name="actorGenderPerson" value="Female"/>
 
             <label for="actor-label">Other</label>
-            <input type="radio" id="actor-label" name="actorGenderPerson" />
+            <input type="radio" id="actor-label" name="actorGenderPerson" value="Other"/>
 
             <label for="actor-label">Actor Birth Date</label>
             <input type="date" id="actor-label" name="actorBirthDate" placeholder="DD-MM-YYYY" required/>

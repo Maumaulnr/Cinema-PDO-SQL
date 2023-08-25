@@ -168,6 +168,20 @@ header, main {
   color: var(--color-error);
 }
 
+/* UPDATE GENRE */
+.update-genre {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
+/* DELETE GENRE */
+.delete-genre {
+  width: 100%;
+  background-color: beige;
+  filter: opacity(0.9);
+}
+
 /* InsertMovie */
 
 h2 {

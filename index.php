@@ -26,12 +26,13 @@ $ctrlGenre = new GenreController();
 $ctrlPerson = new PersonController();
 $ctrlRole = new RoleController();
 
-// protection of injection in URL
-// $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-
 // si on reçoit une action (en GET)
 if (isset($_GET['action'])) {
+
+    // protection of injection in URL
+    // $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+
     // En fonction de l'action reçue
     switch ($_GET['action']) {
             //insert here all the request to generate new page
@@ -108,13 +109,25 @@ if (isset($_GET['action'])) {
             break;
 
         // UPDATE
+        case "updateGenreForm":
+            $ctrlGenre->updateGenreForm($id);
+            break;
+        
+        case "updateGenre":
+            $ctrlGenre->updateGenre($id);
+            break;
+
         case "updateActor":
             $ctrlPerson->updateActor($id);
             break;
         
         // DELETE
-        case "deleteGenreForm":
-            $ctrlGenre->delGenre();
+        case "deleteGenreForm": 
+            $ctrlGenre->deleteGenreForm();
+            break;
+
+        case "deleteGenre":
+            $ctrlGenre->deleteGenre($id);
             break;
 
         // DEFAULT

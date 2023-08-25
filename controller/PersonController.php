@@ -57,7 +57,7 @@ class PersonController
     public function updateActor() {
         $dao = new DAO();
 
-        $actorIdPerson = filter_input(INPUT_POST, "id_person", FILTER_SANITIZE_NUMBER_INT);;
+        $actorIdPerson = filter_input(INPUT_POST, "id_person", FILTER_VALIDATE_INT);
         $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -81,12 +81,12 @@ class PersonController
 
         // filtrer ce qui arrive en POST
         // "actorLastname" : vient du name="actorLastname" du fichier addActorForm.php
-        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
 
-        $insertPersonId = filter_input(INPUT_POST, "insertPersonId", FILTER_SANITIZE_NUMBER_INT);
+        // $insertPersonId = filter_input(INPUT_POST, "insertPersonId", FILTER_SANITIZE_NUMBER_INT);
 
         // vars
         $isAddPersonActorSuccess = false;
@@ -102,17 +102,17 @@ class PersonController
         // si actorLastname, ... sont vide
         if($actorLastname && $actorFirstname && $actorGenderPerson && $actorBirthDate == "") {
             $isFormValid = false;
-            $errorMessages["actorLastname"] = "Ce champ est obligatoire";
             $errorMessages["actorFirstname"] = "Ce champ est obligatoire";
+            $errorMessages["actorLastname"] = "Ce champ est obligatoire";
             $errorMessages["actorGenderPerson"] = "Ce champ est obligatoire";
             $errorMessages["actorBirthDate"] = "Ce champ est obligatoire";
         }
 
         // actorLastname && actorFirstname ne doivent pas dépasser 30 caractères
-        if(strlen($actorLastname && $actorFirstname) > 30) {
+        if(strlen($actorFirstname && $actorLastname) > 30) {
             $isFormValid = false;
-            $errorMessages["actorLastname"] = "Ce champ est limité à 30 caractères";
             $errorMessages["actorFirstname"] = "Ce champ est limité à 30 caractères";
+            $errorMessages["actorLastname"] = "Ce champ est limité à 30 caractères";
         }
 
         // si les règles de validation du formulaire sont respectées
@@ -123,30 +123,30 @@ class PersonController
             $dao = new DAO();
 
             // respecter l'ordre dans la BDD si pas de parenthèses avant le VALUES
-            $sqlPersonActor = "INSERT INTO person(lastname, firstname, gender_person, birth_date)
-                                VALUES (:lastname, :firstname, :gender_person, :birth_date)
+            $sqlPersonActor = "INSERT INTO person(firstname, lastname, gender_person, birth_date)
+                                VALUES (:firstname, :lastname, :gender_person, :birth_date)
                                 ;";
 
-            $sqlInsertActor = "INSERT INTO actor(person_id)
-                                VALUES (:person_id)
-                                ;";
+            // $sqlInsertActor = "INSERT INTO actor(person_id)
+            //                     VALUES (:person_id)
+            //                     ;";
 
             // "actorLastname", ... doivent être identique à :actorLastname, ...
             $personActorParams = [
-                "actorLastname" => $actorLastname,
                 "actorFirstname" => $actorFirstname,
+                "actorLastname" => $actorLastname,
                 "actorGenderPerson" => $actorGenderPerson,
                 "actorBirthDate" => $actorBirthDate
             ];
 
-            $insertActorParams = [
-                "person_id" => $insertPersonId
-            ];
+            // $insertActorParams = [
+            //     "person_id" => $insertPersonId
+            // ];
 
             // On met dans le try (on essaie) les lignes qui ont une chance plus élevée de lever (throw) une exception/erreur
             try {
                 $isAddPersonActorSuccess = $dao->executeRequest($sqlPersonActor, $personActorParams);
-                $isAddActorSuccess = $dao->executeRequest($sqlInsertActor, $insertActorParams);
+                // $isAddActorSuccess = $dao->executeRequest($sqlInsertActor, $insertActorParams);
 
                 if (!$isAddPersonActorSuccess && !$isAddActorSuccess) {
                     $globalMessage = "L'enregistrement a échoué";

@@ -5,7 +5,7 @@ ob_start();
 ?>
 
 <div class="films-actor">
-<!-- On veut pouvoir afficher quand on a cliqué sur un acteur les films dans lesquels il a joué et les rôles-->
+<!-- On veut pouvoir afficher quand on a cliqué sur un acteur les films dans lesquels il a joué et ses rôles-->
 
 <h1>Actor's Films</h1>
 
@@ -17,7 +17,7 @@ ob_start();
         <p>Movie :<?= $casting['title'].' Role: '.$casting['name_role']  ?></p>
     <?php } ?>
 
-    <a href="index.php?action=listActors.php">Return</a>
+    <a href="index.php?action=listActors">Return</a>
 </div>
 
 <?php

@@ -2,24 +2,34 @@
 ob_start();
 ?>
 
-<h1>Form to delete genre</h1>
+<div class="delete-genre">
 
-<form method="POST" action="index.php?action=delGenre">
+    <h1>Form to delete genre</h1>
 
-    <select id="" name="id_genre" required>
-        <option>Genre</option>
 
-        <?php while ($genre = $genres->fetch()) { ?>
-            <option value="<?= $actor['id_genre'] ?>"><?= $genre['label'] ?></option>
-        <?php } ?>
-    </select>
+    <form method="POST" action="index.php?action=deleteGenre">
 
-    <!-- Input: DELETE -->
-    <input type="submit" name="delGenre" value="Delete">
+        <label for="deleteGenreLabel">Select Genre to Delete :</label>
 
-</form>
+        <select name="id_genre" id="deleteGenreLabel" required>
+            <option selected></option>
 
-<a href="index.php?action=listGenres">Return</a>
+            <?php while ($genre = $deleteGenre->fetch()) { ?>
+                <option value="<?= $genre['id_genre'] ?>"><?= $genre['label'] ?></option>
+            <?php } ?>
+        </select>
+
+        <?php //while ($genre = $genres->fetch()) ?>
+            <!-- <input type="checkbox" name="deleteGenreLabel" id="deleteGenreLabel"> -->
+        <?php ?>
+
+        <a href="index.php?action=deleteGenre&id=<?= $genre['id_genre'] ?>">Delete</a>
+
+    </form>
+
+    <a href="index.php?action=listGenres">Return</a>
+
+</div>
 
 <?php
 
