@@ -2,8 +2,8 @@
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 
-    <div class="add-genre">
-        <h1>Add Genre</h1>
+<div class="add-genre">
+    <h1>Add Genre</h1>
 
     <?php
     // On regarde si $isAddGenreSuccess est setté ainsi que $globalMessage et on vérifie qu'elle est initialisé
@@ -15,29 +15,29 @@ ob_start(); // Enclenche la temporisation de sortie
     }
     ?>
 
-        <form action="index.php?action=addGenre" method="POST" class="flex-col">
+    <form action="index.php?action=addGenre" method="POST" id="addGenreForm" class="flex-col" >
 
-            <!-- Placeholder : permet d'afficher du texte dans un input, permet d'informer l'utilisateur sur ce qu'il doit écrire -->
-            <!-- maxlenght : permet de limiter le nombre de caractères mais ce n'est pas sécurisé car peut être modifié dans le "Inspecter". C'est plus pour le confort de l'utilisateur.  -->
-            <label for="genre-label">Genre name</label>
-            <input type="text" id="genre-label" name="label" placeholder="Label" maxlenght="30" />
-            <?php
-            // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"
-            if (isset($errorMessage) && isset($errorMessage["label"]) && $errorMessage["label"]) {
-            ?>   
-            <!-- Texte d'erreur à mettre en rouge -->
-            <p class="text-error"><?= $errorMessage["label"] ?></p>
-            <?php
-            }
-            ?>
+        <!-- Placeholder : permet d'afficher du texte dans un input, permet d'informer l'utilisateur sur ce qu'il doit écrire -->
+        <!-- maxlenght : permet de limiter le nombre de caractères mais ce n'est pas sécurisé car peut être modifié dans le "Inspecter". C'est plus pour le confort de l'utilisateur.  -->
+        <label for="genre-label">Genre name</label>
+        <input type="text" id="genre-label" name="label" placeholder="Label" maxlength="30" />
+        <?php
+        // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"
+        if (isset($errorMessage) && isset($errorMessage["label"]) && $errorMessage["label"]) {
+        ?>   
+        <!-- Texte d'erreur à mettre en rouge -->
+        <p class="text-error"><?= $errorMessage["label"] ?></p>
+        <?php
+        }
+        ?>
 
-            <button type="submit">Save</button>
+        <button type="submit">Save</button>
 
-            <a href="index.php?action=listGenres">Return</a>
+        <a href="index.php?action=listGenres">Return</a>
 
-        </form>
+    </form>
 
-    </div>
+</div>
 
 <?php
 $title = "List of Genres";

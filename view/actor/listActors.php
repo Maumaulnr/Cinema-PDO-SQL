@@ -11,7 +11,7 @@ ob_start(); // Enclenche la temporisation de sortie
     <ul class="list-divider">
         <?php while ($actor = $actors->fetch()) { ?>
             <li>
-                <a href="index.php?action=detailsActor&id= <?= $actor['id_actor'] ?>"><?= $actor['lastname']. ' '. $actor['firstname']; ?></a>
+                <a href="index.php?action=detailsActor&id=<?= $actor['id_actor'] ?>"><?= $actor['lastname']. ' '. $actor['firstname']; ?></a>
             </li>
         <?php } ?>
     </ul>

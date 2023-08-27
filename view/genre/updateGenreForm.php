@@ -8,20 +8,21 @@ ob_start();
 
 <div class="update-genre">
 
-    <h1>Update information about the genre</h1>
+    <h1>Update the genre</h1>
 
 
 
     <form method="POST" action="index.php?action=updateGenre&id=<?= $id ?>">
 
         <label for="genre-label">Genre name</label>
-        <input type="text" id="genre-label" name="label" value="<?= $formValues['label'] ?>" placeholder="Label" maxlenght="30" />
+        <input type="text" id="genre-label" name="label" value="<?= $formValues['label'] ?>" placeholder="Label" maxlength="30" />
 
-        <button type="submit">Update</button>
+        <!-- Quand on clique sur Update, le résultat renvoie vers le détail du genre -->
+        <button type="submit" class="button-link">Update</button>
 
     </form>
 
-    <br><a href="index.php?action=listGenres">Return</a>
+    <a href="index.php?action=listGenres" class="button-link">Return</a>
 
 </div>
 

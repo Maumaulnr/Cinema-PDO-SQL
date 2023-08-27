@@ -3,7 +3,6 @@
 <?php
 require_once 'app/DAO.php';
 
-
 class GenreController
 {
     // LIST GENRES
@@ -172,7 +171,7 @@ class GenreController
 
             $dao = new DAO();
 
-            // (id_genre, label) : respecter l'ordre dans la BDD si pas de parenthèses avant le VALUES
+            // 
             $sqlGenre = "UPDATE Genre
                 SET label = :newLabel
                 WHERE id_genre = :id_genre
@@ -218,6 +217,9 @@ class GenreController
         }
     }
 
+    // POUR SUPPRIMER GENRE IL FAUT SUPPRIMER DANS MGL AU PREALABLE DONC MOVIE_ID ET GENRE_ID!!!
+    // Donc à partir du moment où l'on décide de supprimer un genre, il faut supprimer movie_id aussi donc si genre_id = 1 (action par exemple), il faudra supprimer tous les films (movie_id) ayant comme genre "Action"
+
     // DELETE GENRE LABEL
     public function deleteGenreForm() {
         $dao = new DAO();
@@ -237,6 +239,15 @@ class GenreController
         // $idGenre = filter_input(INPUT_POST, "id_genre", FILTER_SANITIZE_NUMBER_INT);
 
         $dao = new DAO();
+
+        // Supprimer dans la table Movie_Genre_Link avant sinon pas possible
+        $sqlDeleteBelong = "DELETE FROM movie_genre_link
+                            WHERE genre_id = :genre_id
+                            ";
+
+        $paramsDeleteBelong = ["genre_id" => $id];
+
+        $isDeleteGenreSuccess = $dao->executeRequest($sqlDeleteBelong, $paramsDeleteBelong);
 
         // choisir un label pour le supprimer par la suite
         $sqlDeleteGenre = "DELETE FROM genre

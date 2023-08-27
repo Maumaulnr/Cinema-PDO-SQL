@@ -24,7 +24,7 @@ $ctrlFilm = new FilmController();
 $ctrlHome = new HomeController();
 $ctrlGenre = new GenreController();
 $ctrlPerson = new PersonController();
-$ctrlRole = new RoleController();
+// $ctrlRole = new RoleController();
 
 // si on reçoit une action (en GET)
 if (isset($_GET['action'])) {

@@ -1,8 +1,8 @@
 <?php
-ob_start();
+//ob_start();
 ?>
 
-<div class="delete-genre">
+<!-- <div class="delete-genre">
 
     <h1>Form to delete genre</h1>
 
@@ -12,29 +12,29 @@ ob_start();
         <label for="deleteGenreLabel">Select Genre to Delete :</label>
 
         <select name="id_genre" id="deleteGenreLabel" required>
-            <option selected></option>
+            <option selected></option> -->
 
-            <?php while ($genre = $deleteGenre->fetch()) { ?>
-                <option value="<?= $genre['id_genre'] ?>"><?= $genre['label'] ?></option>
-            <?php } ?>
+            <?php //while ($genre = $deleteGenre->fetch()) { ?>
+                <!-- <option value="<?= $genre['id_genre'] ?>"><?= $genre['label'] ?></option>
+            <?php //} ?> -->
         </select>
 
         <?php //while ($genre = $genres->fetch()) ?>
             <!-- <input type="checkbox" name="deleteGenreLabel" id="deleteGenreLabel"> -->
         <?php ?>
 
-        <a href="index.php?action=deleteGenre&id=<?= $genre['id_genre'] ?>">Delete</a>
+        <!-- <a href="index.php?action=deleteGenre&id=<?= $genre['id_genre'] ?>">Delete</a> -->
 
-    </form>
+    <!-- </form> -->
 
-    <a href="index.php?action=listGenres">Return</a>
+    <!-- <a href="index.php?action=listGenres">Return</a> -->
 
-</div>
+<!-- </div> -->
 
 <?php
 
-$title = "Form Delete Genre";
-$content = ob_get_clean();
-require "view/template.php";
+//$title = "Form Delete Genre";
+//$content = ob_get_clean();
+//require "view/template.php";
 
 ?>

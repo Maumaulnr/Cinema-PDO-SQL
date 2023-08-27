@@ -6,14 +6,7 @@ ob_start(); // Enclenche la temporisation de sortie
 
 <div class="details-genre">
 
-    <?php // $genre = $GenreLabel->fetch() ?>
-
     <h1>Film's Genre : <strong><?= $genre['label']; ?></strong></h1>
-
-    <div>
-        
-        
-    </div>
 
     <!-- On veut seulement le titre du film -->
     
