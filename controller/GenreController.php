@@ -18,6 +18,7 @@ class GenreController
         require "view/genre/listGenres.php";
     }
 
+    // Récupre les infos en bdd et return (récupère tableau associatif)
     public function getGenreById($id) {
         $dao = new DAO();
 
@@ -28,8 +29,10 @@ class GenreController
 
         $paramsGenre = ['id_genre' => $id];
 
+        // $genre fait référence au GenreController
         $genre = $dao->executeRequest($sqlGenre, $paramsGenre);
 
+        // On peut fetch ici
         return $genre->fetch();
     }
 
@@ -55,10 +58,12 @@ class GenreController
     }
 
     // ADD GENRE MOVIE
+    // phase 1: ajout du formulaire
     public function addGenreForm() {
         require 'view/genre/addGenreForm.php';
     }
 
+    // phase 2: exécution du formulaire
     public function addGenre() {
 
         // filtrer ce qui arrive en POST
@@ -130,7 +135,9 @@ class GenreController
     }
 
     // UPDATE GENRE
+    // On veut les vrais données de la bdd
     public function updateGenreForm($id) {
+        
         $formValues = $this->getGenreById($id);
 
         require 'view/genre/updateGenreForm.php';
@@ -202,7 +209,7 @@ class GenreController
             $globalMessage = "Le formulaire est invalide";
         }
 
-        // si la mise à jour est un succès
+        // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
         if ($isUpdateGenreSuccess) {
             $this->detailsGenre($id); // le require est inclus dans la méthode
 

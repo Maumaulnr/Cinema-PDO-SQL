@@ -71,9 +71,9 @@ if (isset($_GET['action'])) {
             $ctrlPerson->detailsActor($id);
             break;
 
-        case "filmsActor":
-            $ctrlPerson->filmsActor($id);
-            break;
+        // case "filmsActor":
+        //     $ctrlPerson->filmsActor($id);
+        //     break;
         
         
         // ADD
@@ -115,6 +115,10 @@ if (isset($_GET['action'])) {
         
         case "updateGenre":
             $ctrlGenre->updateGenre($id);
+            break;
+
+        case "updateActorForm":
+            $ctrlPerson->updateActorForm($id);
             break;
 
         case "updateActor":

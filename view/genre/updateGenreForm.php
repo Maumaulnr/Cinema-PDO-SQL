@@ -10,19 +10,17 @@ ob_start();
 
     <h1>Update the genre</h1>
 
+    <form method="POST" action="index.php?action=updateGenre&id=<?= $id ?>" class="form-flex-column">
 
-
-    <form method="POST" action="index.php?action=updateGenre&id=<?= $id ?>">
-
-        <label for="genre-label">Genre name</label>
-        <input type="text" id="genre-label" name="label" value="<?= $formValues['label'] ?>" placeholder="Label" maxlength="30" />
+        <label for="genre-label" class="form-label-center">Genre name</label>
+        <input type="text" id="genre-label" class="form-input-center" name="label" value="<?= $formValues['label'] ?>" placeholder="Label" maxlength="30" />
 
         <!-- Quand on clique sur Update, le résultat renvoie vers le détail du genre -->
-        <button type="submit" class="button-link">Update</button>
+        <button type="submit" class="button-link">↑ Update ↻</button>
 
     </form>
 
-    <a href="index.php?action=listGenres" class="button-link">Return</a>
+    <a href="index.php?action=listGenres" class="button-link">Return ←</a>
 
 </div>
 

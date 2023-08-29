@@ -4,21 +4,22 @@
 ob_start();
 ?>
 
-<h1>Modify information about the actor</h1>
 
-<div>
+<div class="update-actor">
 
-    <form method="POST" action="index.php?action=modifyActor">
+    <h1>Modify information about the actor</h1>
 
-        <?php $actor = $actorUpdate->fetch() ?>
+    <form method="POST" action="index.php?action=updateActor&id=<?= $id ?>" class="form-flex-column">
+
+        <?php //$actor = $actorUpdate->fetch() ?>
+        
+        <!-- Input fields: Firstname -->
+        <label for="firstname">Firstname</label>
+        <input id="firstname" type="text" name="firstname" value="<?= $actor['firstname'] ?>"/>
 
         <!-- Input fields: Lastname -->
         <label for="lastname">Lastname</label>
         <input id="lastname" class="" type="text" name="lastname" value="<?= $actor['lastname'] ?>" />
-
-        <!-- Input fields: Firstname -->
-        <label for="firstname">Firstname</label>
-        <input id="firstname" type="text" name="firstname" value="<?= $actor['firstname'] ?>"/>
 
         <!-- Input fields: Gender -->
         <label for="gender_person">Gender</label>
@@ -28,15 +29,15 @@ ob_start();
         <label for="birth_date">Birth Date</label>
         <input id="birth_date" type="text" name="birth_date" value="<?= $actor['birth_date'] ?>"/>
 
-        <!-- Input: Submit -->
-        <input type="submit" name="modifyActor" value="Modify"/>
+        <!-- Button: Submit -->
+        <button type="submit" class="button-link">↑ Update ↻</button>
         
-        <input type="hidden" name="id_person" value="<?= $actor['id_person'] ?>"/>
     </form>
+
+    <a href="index.php?action=listActors" class="button-link">Return ←</a>
 
 </div>
 
-<a href="index.php?action=listActors">Return</a>
 
 <?php
 

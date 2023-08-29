@@ -19,8 +19,8 @@ ob_start(); // Enclenche la temporisation de sortie
 
         <!-- Placeholder : permet d'afficher du texte dans un input, permet d'informer l'utilisateur sur ce qu'il doit écrire -->
         <!-- maxlenght : permet de limiter le nombre de caractères mais ce n'est pas sécurisé car peut être modifié dans le "Inspecter". C'est plus pour le confort de l'utilisateur.  -->
-        <label for="genre-label">Genre name</label>
-        <input type="text" id="genre-label" name="label" placeholder="Label" maxlength="30" />
+        <label for="genre-label" class="form-label-center">Genre name</label>
+        <input type="text" id="genre-label" class="form-input-center" name="label" placeholder="Label" maxlength="30" />
         <?php
         // Si rien n'est écrit dans le champ alors un message renvoit "Le formulaire est invalide" et "Ce champs est obligatoire"
         if (isset($errorMessage) && isset($errorMessage["label"]) && $errorMessage["label"]) {
@@ -31,9 +31,9 @@ ob_start(); // Enclenche la temporisation de sortie
         }
         ?>
 
-        <button type="submit">Save</button>
+        <button type="submit" class="button-link">Save</button>
 
-        <a href="index.php?action=listGenres">Return</a>
+        <a href="index.php?action=listGenres" class="button-link">Return</a>
 
     </form>
 

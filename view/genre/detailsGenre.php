@@ -6,20 +6,18 @@ ob_start(); // Enclenche la temporisation de sortie
 
 <div class="details-genre">
 
-    <h1>Film's Genre : <strong><?= $genre['label']; ?></strong></h1>
+    <h1>Film's Genre : <span class="span-label-background-color"><?= $genre['label']; ?></span></h1>
 
     <!-- On veut seulement le titre du film -->
-    
-    <h2>Movies :</h2>
 
-    <ul>
+    <ul class="ul-list-movies">
         <?php while ($movie = $movies->fetch()) { ?>
             <li><?= $movie['title'] ?></li>
         <?php } ?>
     </ul>
 
+    <a href="index.php?action=listGenres" class="button-link">Return</a>
 
-    <a href="index.php?action=listGenres">Return</a>
 </div>
 
 

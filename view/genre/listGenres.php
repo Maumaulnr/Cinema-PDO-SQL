@@ -18,26 +18,26 @@ $genresCount = $genresList->rowCount();
             <thead>
                 <tr>
                     <!-- Title column -->
-                    <th>Label</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th id="th-title-column">Label</th>
+                    <th id="th-title-column">Update</th>
+                    <th id="th-title-column">Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($genre = $genresList->fetch()) { ?>
                 <tr>
                     <!-- label -->
-                    <td>
-                        <a href="index.php?action=detailsGenre&id=<?= $genre['id_genre'] ?>" class="td-a-border"><?= $genre["label"] ?></a>
+                    <td class="td-label-border">
+                        <a href="index.php?action=detailsGenre&id=<?= $genre['id_genre'] ?>"><?= $genre["label"] ?></a>
                     </td>
                     <!-- Update -->
-                    <td>
+                    <td class="td-update-delete">
                         <a href="index.php?action=updateGenreForm&id=<?= $genre['id_genre'] ?>">
                             <i class="fa-solid fa-pencil" title="Update"></i>
                         </a>
                     </td>
                     <!-- Delete -->
-                    <td>
+                    <td class="td-update-delete">
                         <a href="index.php?action=deleteGenre&id=<?= $genre['id_genre'] ?>" onclick="return confirmDeleteGenre();">
                             <i class="fa-regular fa-trash-can" title="Delete"></i>
                         </a>

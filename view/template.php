@@ -45,6 +45,17 @@
             
     </header>
     <main>
+
+        <?php
+        // On regarde si $isAddGenreSuccess est setté ainsi que $globalMessage et on vérifie qu'elle est initialisé
+        //if (isset($isActionSuccess) && isset($globalMessage) && $globalMessage) {
+        ?>   
+            <!-- id pour animation JS et la class pour personnaliser affichage du message -->
+            <!-- <p id="global-message" class="<?= $isActionSuccess ? "text-success" : "text-error" ?>"><?= $globalMessage ?></p> -->
+        <?php
+        //}
+        ?>
+
         <?= $content ?>
     </main>
     <footer class="footer-cinema">

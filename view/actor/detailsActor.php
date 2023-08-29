@@ -2,25 +2,38 @@
 ob_start(); // Enclenche la temporisation de sortie
 ?>
 
+<!-- On affiche les détails de l'acteur comme sa date de naissance, etc -->
 <div class="details-actor">
 
-    <h2>Details Actor</h2>
+    <h1>Details Actor</h1>
 
-    <div>
-        <?php $actor = $actors->fetch(); ?>
-        <p><?= $actor['firstname'] ?></p>
-        <p><?= $actor['lastname'] ?></p>
-        <p><?= $actor['gender_person'] ?></p>
-        <p><?= $actor['birth_date'] ?></p>
+    <div class="informations-casting-actor">
+        <?php //$actor = $personActor->fetch() ?>
+        <p><?= $personActor['firstname'] ?></p>
+        <p><?= $personActor['lastname'] ?></p>
+        <p><?= $personActor['gender_person'] ?></p>
+        <p><?= $personActor['birth_date'] ?></p>
     </div>
 
-    <a href="index.php?action=filmsActor&id=<?= $actor['id_actor'] ?>">
-        <h2>Actor's films</h2>
-    </a>
+<!-- On veut pouvoir afficher les films dans lesquels l'acteur a joué et ses rôles-->
 
-    <br><a href="index.php?action=updateActor&id=<?= $actor['id_actor'] ?>"> Modify </a></br>
+    <div class="informations-casting-actor">
 
-    <br><a href="index.php?action=listActors">Return</a></br>
+        <h2>Actor's Films</h2>
+
+        <?php while ($casting = $castingActor->fetch()) { ?>
+            <!-- (Je veux afficher le titre du film et le rôle que l'acteur a joué) x n -->
+            <span><i class="fa-solid fa-film" style="color: #000000;"></i></span>
+            <p><?= $casting['title']?></p>
+            <p><strong>Role: </strong><?=$casting['name_role']?></p>
+        <?php } ?>
+
+    </div>
+
+    <a href="index.php?action=updateActor&id=<?= $actor['id_actor'] ?>" class="button-link">Update ↻</a>
+
+    <a href="index.php?action=listActors" class="button-link">Return ←</a>
+
 </div>
 
 

@@ -8,69 +8,82 @@ class PersonController
     public function listActors() {
         $dao = new DAO();
 
-        $sqlListActors = "SELECT a.id_actor, p.lastname, p.firstname
+        $sqlListActors = "SELECT a.id_actor, p.firstname AS firstnameActor, p.lastname AS lastnameActor
                         FROM actor a
                         INNER JOIN person p ON a.person_id = p.id_person
-                        ORDER BY p.lastname ASC;";
+                        ORDER BY firstnameActor ASC;";
         
         $actors = $dao->executeRequest($sqlListActors);
 
         require "view/actor/listActors.php";
     }
 
-    // DETAILS ACTOR
-    public function detailsActor($id) {
+    // Récupre les infos en bdd et return (récupère tableau associatif)
+    public function getPersonById($id) {
         $dao = new DAO();
 
-        $sqlDetailsActor = "SELECT p.id_person, a.id_actor, p.firstname, p.lastname, p.gender_person, DATE_FORMAT(p.birth_date,'%d-%m-%Y') AS birth_date
+        // Récupérer les infos de l'acteur via la table Person
+        $sqlPersonActor = "SELECT a.person_id, a.id_actor, p.firstname, p.lastname, p.gender_person, DATE_FORMAT(p.birth_date,'%d-%m-%Y') AS birth_date
                             FROM actor a
                             INNER JOIN person p ON a.person_id = p.id_person
-                            WHERE a.id_actor = :actor_id
+                            WHERE a.id_actor = :id_actor
                             ORDER BY p.firstname ASC;";
 
-        $paramsActor = [':actor_id' => $id];                   
+        $paramsPersonActor = [':id_actor' => $id];                   
         
-        $actors = $dao->executeRequest($sqlDetailsActor, $paramsActor);
+        $personActor = $dao->executeRequest($sqlPersonActor, $paramsPersonActor);
 
-        require "view/actor/detailsActor.php";
+        return $personActor->fetch();
     }
 
-    // ACTOR'S FILMS
-    public function filmsActor($id) {
+    // DETAILS ACTOR
+    public function detailsActor($id) {
+        $personActor = $this->getPersonById($id);
+
         $dao = new DAO();
 
-        $sqlFilmsActor = "SELECT  m.title, r.name_role
+        // $sqlDetailsActor = "SELECT p.id_person, a.id_actor, p.firstname, p.lastname, p.gender_person, DATE_FORMAT(p.birth_date,'%d-%m-%Y') AS birth_date
+        //                     FROM actor a
+        //                     INNER JOIN person p ON a.person_id = p.id_person
+        //                     WHERE a.id_actor = :actor_id
+        //                     ORDER BY p.firstname ASC;";
+
+        // $paramsActor = [':actor_id' => $id];                   
+        
+        // $actors = $dao->executeRequest($sqlDetailsActor, $paramsActor);
+
+        // Nouvelle requête pour ajouter les films et les rôles de l'acteur
+        $sqlCastingActor = "SELECT  m.title, r.name_role
                         FROM casting c
                         INNER JOIN actor a ON c.actor_id = a.id_actor
                         INNER JOIN role r ON c.role_id = r.id_role
                         INNER JOIN movie m ON c.movie_id = m.id_movie
-                        WHERE c.actor_id = :id_actor;";
+                        WHERE c.actor_id = :actor_id;";
 
-        $paramsFilmsActor = [':id_actor' => $id];
+        $paramsCastingActor = [':actor_id' => $id];
 
-        $filmsActor = $dao->executeRequest($sqlFilmsActor, $paramsFilmsActor);
+        $castingActor = $dao->executeRequest($sqlCastingActor, $paramsCastingActor);
 
-        require "view/actor/filmsActor.php";
+        require "view/actor/detailsActor.php";
     }
 
-    // UPDATE ACTOR
-    public function updateActor() {
-        $dao = new DAO();
+    // // ACTOR'S FILMS
+    // public function filmsActor($id) {
+    //     $dao = new DAO();
 
-        $actorIdPerson = filter_input(INPUT_POST, "id_person", FILTER_VALIDATE_INT);
-        $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
+    //     $sqlFilmsActor = "SELECT  m.title, r.name_role
+    //                     FROM casting c
+    //                     INNER JOIN actor a ON c.actor_id = a.id_actor
+    //                     INNER JOIN role r ON c.role_id = r.id_role
+    //                     INNER JOIN movie m ON c.movie_id = m.id_movie
+    //                     WHERE c.actor_id = :id_actor;";
 
-        $sqlUpdateActor = "UPDATE person p
-                        SET actorFirstname = '" .$actorFirstname. "', actorLastname = '" .$actorLastname. "', actorGenderPerson = '" .$actorGenderPerson. "', actorBirthDate = '" .$actorBirthDate. "'
-                        WHERE p.id_person = ". $actorIdPerson;
+    //     $paramsFilmsActor = [':id_actor' => $id];
 
-       $actorUpdate = $dao->executeRequest($sqlUpdateActor);
+    //     $filmsActor = $dao->executeRequest($sqlFilmsActor, $paramsFilmsActor);
 
-       require "view/actor/updateActor.php";
-    }
+    //     require "view/actor/filmsActor.php";
+    // }
 
     // ADD ACTOR
     public function addActorForm() {
@@ -81,15 +94,19 @@ class PersonController
 
         // filtrer ce qui arrive en POST
         // "actorLastname" : vient du name="actorLastname" du fichier addActorForm.php
+        $actorPersonId = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
         $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
+        $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        // $insertPersonId = filter_input(INPUT_POST, "insertPersonId", FILTER_SANITIZE_NUMBER_INT);
+        // Formatage de la date pour qu'elle corresponde au format de date SQL
+        // $formatBirthDate = date('Y-m-d', strtotime($actorBirthDate));
+
+        $actorIdActor = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
 
         // vars
-        $isAddPersonActorSuccess = false;
+        $isAddPersonSuccess = false;
         $isAddActorSuccess = false;
         $globalMessage = "L'enregistrement a bien été effectué";
         $formValues = null;
@@ -123,39 +140,46 @@ class PersonController
             $dao = new DAO();
 
             // respecter l'ordre dans la BDD si pas de parenthèses avant le VALUES
-            $sqlPersonActor = "INSERT INTO person(firstname, lastname, gender_person, birth_date)
-                                VALUES (:firstname, :lastname, :gender_person, :birth_date)
-                                ;";
-
-            // $sqlInsertActor = "INSERT INTO actor(person_id)
-            //                     VALUES (:person_id)
-            //                     ;";
+            $sqlPerson = "INSERT INTO person(firstname, lastname, gender_person, birth_date)
+                        VALUES (:firstname, :lastname, :gender_person, :birth_date)
+                        ;";
 
             // "actorLastname", ... doivent être identique à :actorLastname, ...
-            $personActorParams = [
-                "actorFirstname" => $actorFirstname,
-                "actorLastname" => $actorLastname,
-                "actorGenderPerson" => $actorGenderPerson,
-                "actorBirthDate" => $actorBirthDate
+            $personParams = [
+                "firstname" => $actorFirstname,
+                "lastname" => $actorLastname,
+                "gender_person" => $actorGenderPerson,
+                "birth_date" => $actorBirthDate
             ];
-
-            // $insertActorParams = [
-            //     "person_id" => $insertPersonId
-            // ];
 
             // On met dans le try (on essaie) les lignes qui ont une chance plus élevée de lever (throw) une exception/erreur
             try {
-                $isAddPersonActorSuccess = $dao->executeRequest($sqlPersonActor, $personActorParams);
-                // $isAddActorSuccess = $dao->executeRequest($sqlInsertActor, $insertActorParams);
+                $isAddPersonSuccess = $dao->executeRequest($sqlPerson, $personParams);
 
-                if (!$isAddPersonActorSuccess && !$isAddActorSuccess) {
+                if ($isAddPersonSuccess) {
+                    // Récupération de l'ID de la personne ajoutée
+                    $personId = $dao->getBDD()->lastInsertId();
+
+                    $sqlActor = "INSERT INTO actor(person_id)
+                                VALUES (:person_id);";
+
+                    // Utilisation de l'ID de la personne pour ajouter l'acteur dans la table Actor
+                    $actorParams = [
+                        "person_id" => $personId
+                    ];
+
+                    $isAddActorSuccess = $dao->executeRequest($sqlActor, $actorParams);
+                }
+
+                // && !$isAddActorSuccess
+                if (!$isAddPersonSuccess && !$isAddActorSuccess) {
                     $globalMessage = "L'enregistrement a échoué";
                 }
             } catch (\Throwable $error) {
                 // si une exception/erreur est levée (thrown), alors on l'attrape (catch) et on la gère manuellement
-                $isAddPersonActorSuccess = false;
+                $isAddPersonSuccess = false;
                 $isAddActorSuccess = false;
-                $globalMessage = "L'enregistrement a échoué suite à une erreur technique";
+                $globalMessage = "This actor already exists!";
 
                 // var_dump($error);
                 // die();
@@ -175,6 +199,34 @@ class PersonController
 
         require "view/actor/addActorForm.php";
     }
+
+    // UPDATE ACTOR
+    public function updateActorForm() {
+        
+        // $formValues = $this->getPersonById($id);
+
+        require 'view/actor/updateActorForm.php';
+    }
+
+    public function updateActor($id) {
+        $dao = new DAO();
+
+        $actorIdPerson = filter_input(INPUT_POST, "id_person", FILTER_VALIDATE_INT);
+        $actorFirstname = filter_input(INPUT_POST, "actorFirstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorLastname = filter_input(INPUT_POST, "actorLastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorGenderPerson = filter_input(INPUT_POST, "actorGenderPerson", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $actorBirthDate = filter_input(INPUT_POST, "actorBirthDate", FILTER_SANITIZE_NUMBER_INT);
+
+        $sqlUpdateActor = "UPDATE person p
+                        SET actorFirstname = '" .$actorFirstname. "', actorLastname = '" .$actorLastname. "', actorGenderPerson = '" .$actorGenderPerson. "', actorBirthDate = '" .$actorBirthDate. "'
+                        WHERE p.id_person = ". $actorIdPerson;
+
+       $actorUpdate = $dao->executeRequest($sqlUpdateActor);
+
+       require "view/actor/updateActorForm.php";
+    }
+
+    // DELETE ACTOR
 
 
     // CASTING FORMULAIRE
