@@ -2,7 +2,6 @@
 
 <?php
 ob_start();
-
 ?>
 
 <h2>Insert the movie</h2>

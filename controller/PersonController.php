@@ -42,16 +42,6 @@ class PersonController
 
         $dao = new DAO();
 
-        // $sqlDetailsActor = "SELECT p.id_person, a.id_actor, p.firstname, p.lastname, p.gender_person, DATE_FORMAT(p.birth_date,'%d-%m-%Y') AS birth_date
-        //                     FROM actor a
-        //                     INNER JOIN person p ON a.person_id = p.id_person
-        //                     WHERE a.id_actor = :actor_id
-        //                     ORDER BY p.firstname ASC;";
-
-        // $paramsActor = [':actor_id' => $id];                   
-        
-        // $actors = $dao->executeRequest($sqlDetailsActor, $paramsActor);
-
         // Nouvelle requête pour ajouter les films et les rôles de l'acteur
         $sqlCastingActor = "SELECT  m.title, r.name_role
                         FROM casting c

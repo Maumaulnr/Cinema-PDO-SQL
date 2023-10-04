@@ -43,6 +43,7 @@ ob_start();
 </form>
 
 <?php
+
 // clean the temporary memory
 $content = ob_get_clean();
 

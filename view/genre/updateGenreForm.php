@@ -1,5 +1,3 @@
-<!--  -->
-
 <?php
 ob_start();
 ?>
@@ -23,7 +21,6 @@ ob_start();
     <a href="index.php?action=listGenres" class="button-link">Return ←</a>
 
 </div>
-
 
 <?php
 
